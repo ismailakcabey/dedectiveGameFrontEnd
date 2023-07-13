@@ -1,0 +1,18 @@
+
+#body{
+  height: 100vh;
+  display: flex;
+  background-image: url("https://st4.depositphotos.com/1195019/20499/i/600/depositphotos_204998418-stock-photo-colorful-smoke-on-a-black.jpg");
+  background-repeat: none;
+  background-size: cover;
+  background-position: center;
+  color: white;
+}
+
+#content{
+  background-color: rgba(31, 41, 55, 0.6); /* Transparan mor arkaplan rengi */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); /* Kartın gölgesi */
+    border-radius: 15px; /* Kartın köşe yuvarlatma */
+    padding: 20px; /* Kartın iç kenar boşluğu */
+    margin: 15px;
+}

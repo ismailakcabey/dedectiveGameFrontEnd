@@ -1,0 +1,72 @@
+.container{
+    border-radius: 15px;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+}
+
+.title{
+    display: flex;
+    justify-content: center;
+}
+
+.form-container{
+    background-color: rgba(128, 0, 128, 0.6); /* Transparan mor arkaplan rengi */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); /* Kartın gölgesi */
+    border-radius: 15px; /* Kartın köşe yuvarlatma */
+    padding: 20px; /* Kartın iç kenar boşluğu */
+}
+
+@media screen and (max-width: 768px) {
+  .alert-container{
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 9999;
+  }
+    .image-container {
+      display: none;
+    }
+  }
+  
+  @media screen and (min-width: 769px) {
+    .alert-container{
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      z-index: 9999;
+    }
+    .image-container {
+        display: flex;
+  justify-content: center;
+  align-items: center;
+    }
+  }
+  
+
+
+.body{
+    height: 100vh;
+    display: flex;
+    background-repeat: none;
+    background-size: cover;
+    background-position: center;
+}
+
+.skip {
+   
+   
+  }
+  
+
+  .button-container {
+    display: flex;
+    justify-content: flex-end;
+  }
+
+  .alert-container{
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 9999;
+  }
