@@ -2,6 +2,7 @@ import { useParams } from "react-router-dom";
 import { useGetEventId } from "../../../services/event";
 import { useEffect, useState } from "react";
 import ExpressionComponent from "../../../components/Expression";
+import CardExtreComponent from "../../../components/CardExtre";
 
 
 const EventDetail = () => {
@@ -39,7 +40,7 @@ const EventDetail = () => {
     const CmpReturn = (cmp:number) => {
         if(cmp == 1){
             return(
-                <>Kart Ekstresi</>
+               <CardExtreComponent value={event?.cardExtra}/>
             )
         }
         if(cmp == 2){
