@@ -11,6 +11,10 @@ export const APIS = {
 
   EVENT: {
     EVENT: API_PREFIX + '/event',
+  },
+
+  REPORT: {
+    REPORT: API_PREFIX + '/report',
   }
 
 };

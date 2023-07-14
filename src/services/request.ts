@@ -235,6 +235,14 @@ const useGetDedective = <T>(key:string,url:string,params:any) => {
   return useQuery(key, service);
 }
 
+const useGetIdDedective = <T>(key:string,url:string,id:string)=>{
+  const service = async () => {
+    const data : T = await axios.get(`${url}/${id}`)
+    return data
+  }
+  return useQuery(key,service)
+}
+
 export {
   useGetOne,
   useGetOneId,
@@ -246,7 +254,8 @@ export {
   useDelete,
   usePatch,
   usePutWorkingDays,
-  useGetDedective
+  useGetDedective,
+  useGetIdDedective
 };
 
 export default axios;
