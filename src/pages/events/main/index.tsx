@@ -6,7 +6,6 @@ import { useEffect, useState } from 'react';
 
 
 const EventMain = () => {
-    
     const { Search } = Input;
   const [search,setSearch] = useState<string>()
   const [currentPage,setCurrentPage] = useState<number>(0)
@@ -18,8 +17,9 @@ const EventMain = () => {
         take:6,
         skip:currentPage*6
     }
-    const { isFetching, data: eventData, refetch } = useGetEvent(query);
 
+    const { isFetching, data: eventData, refetch,isLoading } = useGetEvent(query);
+    console.log(isLoading)
     useEffect(()=>{
         console.log(search)
         console.log(currentPage)
@@ -47,6 +47,19 @@ const EventMain = () => {
     
   return (
     <>
+    {(isLoading)?<><div className="alert-container">
+              <div id="alert-border-3" className="flex items-center p-4 mb-4 text-purple-800 border-t-4 border-purple-300 bg-purple-50 dark:text-purple-400 dark:bg-gray-800 dark:border-purple-800" role="alert">
+                <svg className="flex-shrink-0 w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+                  <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z" />
+                </svg>
+                <div className="ml-3 text-sm font-medium">
+                  Başarılı şekilde kayıt oluşturdunuz <a href="/login" className="font-semibold underline hover:no-underline">bu adresten giriş yapabilirsiniz</a>. Ancak önce e-posta onay işleminizi tamamlamanız gerekmektedir
+                </div>
+                <button type="button" className="ml-auto -mx-1.5 -my-1.5 bg-green-50 text-green-500 rounded-lg focus:ring-2 focus:ring-green-400 p-1.5 hover:bg-green-200 inline-flex items-center justify-center h-8 w-8 dark:bg-gray-800 dark:text-green-400 dark:hover:bg-gray-700" data-dismiss-target="#alert-border-3" aria-label="Close">
+                </button>
+              </div>
+            </div>
+</>:<></>}
      <div className="w-10/12 sm:w-80 mx-auto ">
      <Search
       placeholder="Mağdur Adı İle Arama"

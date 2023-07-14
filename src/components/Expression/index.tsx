@@ -24,7 +24,7 @@ const ExpressionComponent = ({ onChange, value }: IProps) => {
             },
             {
                 text: "İfadenin alındığı tarih",
-                value: currentExpression.expressionDate
+                value: `${new Date(currentExpression.expressionDate).getDate()}/${new Date(currentExpression.expressionDate).getMonth() + 1}/${new Date(currentExpression.expressionDate).getFullYear()}-${new Date(currentExpression.expressionDate).getHours()}:${new Date(currentExpression.expressionDate).getMinutes()}:${new Date(currentExpression.expressionDate).getSeconds()}`
             },
             {
                 text: "İfadenin Alındığı yer",
