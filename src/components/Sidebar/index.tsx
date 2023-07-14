@@ -29,7 +29,7 @@ const Sidebar = (
 
   return (
     <div>
-        <div className="flex h-screen bg-gradient-to-r from-grey-900 to-grey-800 text-white">
+        <div className="flex bg-gradient-to-r from-grey-900 to-grey-800 text-white">
       {isMobileView ? (
         <button
           onClick={toggleSidebar}

@@ -9,6 +9,8 @@
  import DashBoard from '../pages/dashboard';
 import ProtectedRoutes from './protected';
 import NotFound from '../pages/notFound';
+import EventMain from '../pages/events/main';
+import EventDetail from '../pages/events/detail';
  class Routers extends Component {  
      render(): ReactNode {
          return(
@@ -19,6 +21,8 @@ import NotFound from '../pages/notFound';
           <Route element={<ProtectedRoutes/>}>
           <Route path='/profile' element={<></>}/>
            <Route path="/" element={<DashBoard />} />
+           <Route path="/events" element={<EventMain />} />
+           <Route path="/events/:id" element={<EventDetail />} />
           </Route>
            </Routes>
          )

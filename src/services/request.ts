@@ -124,16 +124,14 @@ const transformInclude = (includes: string[]) => {
   return includes.map((item) => ({ relation: item }));
 };
 
-const useGetList = <T>(key: string, url: string, tableParams?: ITableQueryParams<T>) => {
+const useGetList = <T>(key: string, url: string, tableParams?: any) => {
   const service = async () => {
     let params: listParams = {};
-    params = { ...transformPagination(tableParams?.pagination!) };
-    params.where = transformFilters(tableParams?.filters, tableParams?.typeWithFilters!);
-    params.order = transformSorter(tableParams?.sorter);
-    params.include = transformInclude(tableParams?.include!);
-
+    params = tableParams
     const data: T = await axios.get(url, {
-      params: { filter: JSON.stringify(params) },
+      params: { 
+        query :JSON.stringify(params)
+       },
     });
 
     return data;
@@ -222,6 +220,21 @@ const usePatch = <T>(url: string) => {
   });
 };
 
+const useGetDedective = <T>(key:string,url:string,params:any) => {
+  const service = async () => {
+    params = {
+      where:{}
+    }
+    const data: T = await axios.get(url, {
+      params: {
+        query:JSON.stringify(params)
+       },
+    });
+    return data;
+  };
+  return useQuery(key, service);
+}
+
 export {
   useGetOne,
   useGetOneId,
@@ -233,6 +246,7 @@ export {
   useDelete,
   usePatch,
   usePutWorkingDays,
+  useGetDedective
 };
 
 export default axios;

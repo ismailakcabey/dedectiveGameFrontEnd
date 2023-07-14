@@ -7,6 +7,10 @@ export const APIS = {
 
   USER: {
     USER: API_PREFIX + '/user',
+  },
+
+  EVENT: {
+    EVENT: API_PREFIX + '/event',
   }
 
 };

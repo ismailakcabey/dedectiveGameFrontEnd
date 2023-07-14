@@ -27,7 +27,7 @@ function App() {
   const data:IUser = LocalStorageUtils.getItem(EKEYS.userKey)
   
   return (
-    <div id='body' className="flex h-screen">
+    <div id='body' className="flex">
       {(data)?<SideBar menuElement={menuElement} />:<></>}
       <div id='content' className="flex-grow mt-10 ml-5">
         <Routers />

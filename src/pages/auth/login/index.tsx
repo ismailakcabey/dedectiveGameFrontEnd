@@ -63,7 +63,7 @@ const Login = () => {
         <label  className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Email</label>
         <Input 
       style={{marginBottom:"8px"}}
-       placeholder=""
+       placeholder="email"
         prefix={<UserOutlined />} />
       </div>,
         responsive: { xs: 24, md: 12 },
@@ -76,7 +76,7 @@ const Login = () => {
         <label  className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Şifre</label>
         <Input 
       style={{marginBottom:"8px"}}
-       placeholder=""
+       placeholder="şifre"
         prefix={<LockOutlined />} />
       </div>,
         responsive: { xs: 24, md: 12 },
