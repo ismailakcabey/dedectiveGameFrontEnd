@@ -1,5 +1,4 @@
 import { type RouteObject } from 'react-router-dom'
-import { lazy } from 'react'
 import Register from '../pages/auth/register'
 import Login from '../pages/auth/login'
 import NotFound from '../pages/notFound'

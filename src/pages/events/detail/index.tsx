@@ -3,12 +3,17 @@ import { useGetEventId } from "../../../services/event";
 import { useEffect, useState } from "react";
 import ExpressionComponent from "../../../components/Expression";
 import CardExtreComponent from "../../../components/CardExtre";
-
+import MessageComponent from "../../../components/Message";
+import ClueComponent from "../../../components/Clue";
+import HappendSchema from "../../../components/HappendSchema";
+import { IExpression } from "../../../models/expression";
+import { Modal } from 'antd';
 
 const EventDetail = () => {
     const { id } = useParams();
     //@ts-ignore
     const { isFetching, data: event, refetch,isLoading ,isError} = useGetEventId(id);
+    const [isModalOpen, setIsModalOpen] = useState(false);
     const [component,setComponent] = useState<number>(2)
     useEffect(()=>{
         console.log(component)
@@ -50,20 +55,32 @@ const EventDetail = () => {
         }
         if(cmp == 3){
             return(
-                <>İpuçları</>
+                <ClueComponent value={event?.clue}/>
             )
         }
         if(cmp == 4){
             return(
-                <>Mesajlar</>
+                <MessageComponent value={event?.message}/>
             )
         }
         if(cmp == 5){
             return(
-                <>Olay şeması</>
+                <HappendSchema value={event?.expression}/>
             )
         }
     }
+
+    const showModal = () => {
+      setIsModalOpen(true);
+    };
+  
+    const handleOk = () => {
+      setIsModalOpen(false);
+    };
+  
+    const handleCancel = () => {
+      setIsModalOpen(false);
+    };
     
     return(
         <>
@@ -105,10 +122,27 @@ const EventDetail = () => {
     ))}
   </div>
   <div className="flex justify-center">
-    <div className="w-full sm:w-11/12 md:w-11/12 lg:w-11/12 xl:w-11/12 p-4 bg-white border border-gray-200 rounded-lg shadow sm:p-6 md:p-8 dark:bg-gray-800 dark:border-gray-700">
+    <div className="w-full sm:w-10/12 md:w-10/12 lg:w-10/12 xl:w-10/12 p-4 bg-white border border-gray-200 rounded-lg shadow sm:p-6 md:p-8 dark:bg-gray-800 dark:border-gray-700">
     {CmpReturn(component)}
-        
+    <div className="mt-5 text-center">
+  <p>Şüpheliyi Seç</p>
+  <div className="flex justify-center">
+    {event?.expression.map((item: IExpression, index) => (
+      <button
+        key={index}
+        onClick={showModal}
+        type="button"
+        className={`text-white bg-gradient-to-br from-purple-600 to-blue-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mx-2 my-2`}
+      >
+        {item.personName}
+      </button>
+    ))}
+  </div>
+</div>
+
+
     </div>
+    
   </div>
 </>
     )

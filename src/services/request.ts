@@ -3,7 +3,6 @@ import { TablePaginationConfig, notification } from 'antd';
 import Axios from 'axios';
 import { useMutation, useQuery } from 'react-query';
 import { EKEYS } from '../config';
-import { ITableQueryParams } from '../models/common';
 
 interface listParams {
   take?: number;
@@ -90,39 +89,6 @@ const transformPagination = (pagination: TablePaginationConfig) => {
   return params;
 };
 
-const transformFilters = (filters: any, typeWithFilters: string[]) => {
-  if (!filters) return;
-  const result: { [key: string]: any } = {};
-  for (const key in filters) {
-    const value = filters[key];
-    if (!value || value === null) continue;
-
-    if (typeWithFilters && typeWithFilters.includes(key)) {
-      result[key] = typeWithFilters.reduce(
-        (acc: Record<string, { inq: string[] }>, item: string) => {
-          acc[item] = { inq: value };
-          return acc;
-        },
-        {}
-      );
-    } else {
-      result[key] = { like: value[0], options: 'i' };
-    }
-  }
-
-  return result;
-};
-
-const transformSorter = (sorter: any) => {
-  const { field, order } = sorter || {};
-  if (!field || !order) return 'createdAt DESC';
-  return `${field} ${order === 'ascend' ? 'ASC' : 'DESC'}`;
-};
-
-const transformInclude = (includes: string[]) => {
-  if (!includes) return;
-  return includes.map((item) => ({ relation: item }));
-};
 
 const useGetList = <T>(key: string, url: string, tableParams?: any) => {
   const service = async () => {

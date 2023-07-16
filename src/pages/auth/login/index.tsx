@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useLogin, useMe } from "../../../services/auth/auth";
+import { useLogin } from "../../../services/auth/auth";
 import { Link, useNavigate } from "react-router-dom";
 import { useRecoilState } from 'recoil';
 import { configState } from "../../../stores/config";
@@ -22,18 +22,17 @@ const Login = () => {
   };
 
   const [form] = Form.useForm();
-  const [isLoading, setIsLoading] = useState(false);
   const [loadingBtn, setLoadingBtn] = useState<boolean>(false);
   const loginMutation = useLogin();
   const navigate = useNavigate();
   const [config, setConfig] = useRecoilState(configState);
-
+  console.log(loadingBtn)
   const onFinish = async (form: ILoginParams) => {
     setLoadingBtn(true);
     try {
       const result = await loginMutation.mutateAsync(form);
       LocalStorageUtils.setItem<string>(EKEYS.tokenKey, result.token);
-       const axiosData = axios.create({
+       axios.create({
          // Axios yapılandırmasını burada tanımlayın
        });
        axios.interceptors.request.use((config) => {
@@ -41,10 +40,10 @@ const Login = () => {
          config.headers.Authorization = `Bearer ${result.token}`;
          return config;
        });
-      setIsLoading(true);
+       setLoadingBtn(true);
       const { data: getUser } = await axios.get<IUser>(APIS.AUTH.ME);
       console.log(getUser,"data userme axios");
-      setIsLoading(false); 
+      setLoadingBtn(false); 
       setConfig({ ...config, user: getUser });
       LocalStorageUtils.setItem(EKEYS.userKey, getUser);
       navigate({ pathname: '/' });

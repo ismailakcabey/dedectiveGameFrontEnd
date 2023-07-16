@@ -1,6 +1,6 @@
 import { IDynamicForm } from '../../models/common';
 import { SaveOutlined } from '@ant-design/icons';
-import { Button, Col, Form, Row } from 'antd';
+import { Col, Form, Row } from 'antd';
 import ModalActionBtns from '../Buttons/action-btn/index';
 import { memo, useEffect } from 'react';
 import './index.scss';

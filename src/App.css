@@ -15,3 +15,14 @@
     padding: 20px; /* Kartın iç kenar boşluğu */
     margin: 15px;
 }
+
+#app {
+  position: relative;
+}
+
+.sidebar-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  /* Diğer stiller */
+}

@@ -27,11 +27,13 @@ function App() {
   const data:IUser = LocalStorageUtils.getItem(EKEYS.userKey)
   
   return (
+    <div className="app">
     <div id='body' className="flex">
-      {(data)?<SideBar menuElement={menuElement} />:<></>}
+      {(data)?<div ><SideBar menuElement={menuElement} /></div>:<></>}
       <div id='content' className="flex-grow mt-10 ml-5">
         <Routers />
       </div>
+    </div>
     </div>
   )
 }

@@ -1,7 +1,6 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Transition } from '@headlessui/react';
-import { CloseOutlined, MenuUnfoldOutlined } from '@ant-design/icons';
-import DashBoard from '../../pages/dashboard';
+import { CloseOutlined } from '@ant-design/icons';
 import { Link } from 'react-router-dom';
 
 
@@ -28,8 +27,7 @@ const Sidebar = (
   };
 
   return (
-    <div>
-        <div className="flex bg-gradient-to-r from-grey-900 to-grey-800 text-white">
+    <div className="flex bg-gradient-to-r from-grey-900 to-grey-800 text-white">
       {isMobileView ? (
         <button
           onClick={toggleSidebar}
@@ -38,9 +36,15 @@ const Sidebar = (
           {isOpen ? (
             <></>
           ) : (
-            <svg className="w-6 h-6 text-grey-800 dark:text-grey mt-5 ml-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 17 14">
-    <path d="M16 2H1a1 1 0 0 1 0-2h15a1 1 0 1 1 0 2Zm0 6H1a1 1 0 0 1 0-2h15a1 1 0 1 1 0 2Zm0 6H1a1 1 0 0 1 0-2h15a1 1 0 0 1 0 2Z"/>
-</svg>
+            <svg
+              className="w-6 h-6 text-grey-800 dark:text-grey mt-5 ml-5"
+              aria-hidden="true"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="currentColor"
+              viewBox="0 0 17 14"
+            >
+              <path d="M16 2H1a1 1 0 0 1 0-2h15a1 1 0 1 1 0 2Zm0 6H1a1 1 0 0 1 0-2h15a1 1 0 1 1 0 2Zm0 6H1a1 1 0 0 1 0-2h15a1 1 0 0 1 0 2Z" />
+            </svg>
           )}
         </button>
       ) : null}
@@ -59,13 +63,18 @@ const Sidebar = (
       >
         <div className="flex flex-col h-screen bg-gray-50 dark:bg-gray-800">
           <div className="flex items-center justify-between p-4">
-          <div className="flex flex-col items-center pb-10">
-          <div className="flex items-center">
-  <img className="w-24 h-24 mb-3 rounded-full shadow-lg" src="https://cdn-icons-png.flaticon.com/128/3067/3067684.png" alt="Bonnie image" />
-  <h5 className="mb-1 text-xl font-medium text-gray-900 dark:text-white">Dedective Game</h5>
-</div>
-
-    </div>
+            <div className="flex flex-col items-center pb-10">
+              <div className="flex items-center">
+                <img
+                  className="w-24 h-24 mb-3 rounded-full shadow-lg"
+                  src="https://cdn-icons-png.flaticon.com/128/3067/3067684.png"
+                  alt="Bonnie image"
+                />
+                <h5 className="mb-1 text-xl font-medium text-gray-900 dark:text-white">
+                  Dedective Game
+                </h5>
+              </div>
+            </div>
             {!isMobileView ? null : (
               <button
                 onClick={toggleSidebar}
@@ -77,23 +86,38 @@ const Sidebar = (
           </div>
 
           <div className="h-full px-3 py-4 overflow-y-auto bg-gray-50 dark:bg-gray-800">
-            {
-                menuElement.map((menuItem:any,key:number)=>{
-                    return(
-                        <Link key={key} to={menuItem.link}>
-                            <a href="#" className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
-               <span className="flex-1 ml-3 whitespace-nowrap">{menuItem.name}</span>
-            </a>
-                        </Link>
-                    )
-                })
-            }
+            {menuElement.map((menuItem: any, key: number) => {
+              return (
+                <Link key={key} to={menuItem.link}>
+                  <a className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
+                    <span className="flex-1 ml-3 whitespace-nowrap">
+                      {menuItem.name}
+                    </span>
+                  </a>
+                </Link>
+              );
+            })}
+            <div
+              id="dropdown-cta"
+              className="p-4 mt-6 rounded-lg bg-blue-50 dark:bg-blue-900"
+              role="alert"
+            >
+              <div className="flex items-center mb-3">
+                <span className="bg-orange-100 text-orange-800 text-sm font-semibold mr-2 px-2.5 py-0.5 rounded dark:bg-orange-200 dark:text-orange-900">
+                  Beta
+                </span>
+              </div>
+              <p className="mb-3 text-sm text-blue-800 dark:text-blue-400">
+                Dedektiflik oyunu şuanda beta sürümündedir geliştirilmeye devam edilecektir iyi oyunlar dileriz.
+              </p>
+            </div>
           </div>
         </div>
       </Transition>
-    </div>
     </div>
   );
 };
 
 export default Sidebar;
+
+

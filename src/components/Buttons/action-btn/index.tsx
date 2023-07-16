@@ -1,4 +1,4 @@
-import { Button, Modal } from 'antd';
+import { Button } from 'antd';
 import { ButtonType } from 'antd/es/button';
 import React from 'react';
 

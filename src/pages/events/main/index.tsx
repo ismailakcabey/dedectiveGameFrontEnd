@@ -1,7 +1,6 @@
-import { Input, Pagination, Space } from 'antd';
-import { IEvent, IEventResponse } from "../../../models/event";
+import { Input } from 'antd';
+import { IEvent } from "../../../models/event";
 import { useGetEvent } from "../../../services/event";
-import { LeftOutlined, RightOutlined, UserOutlined } from "@ant-design/icons";
 import { useEffect, useState } from 'react';
 
 
@@ -18,7 +17,7 @@ const EventMain = () => {
         skip:currentPage*6
     }
 
-    const { isFetching, data: eventData, refetch,isLoading } = useGetEvent(query);
+    const { data: eventData, refetch,isLoading } = useGetEvent(query);
     console.log(isLoading)
     useEffect(()=>{
         console.log(search)
@@ -47,6 +46,7 @@ const EventMain = () => {
     
   return (
     <>
+    
     {(isLoading)?<><div className="alert-container">
               <div id="alert-border-3" className="flex items-center p-4 mb-4 text-purple-800 border-t-4 border-purple-300 bg-purple-50 dark:text-purple-400 dark:bg-gray-800 dark:border-purple-800" role="alert">
                 <svg className="flex-shrink-0 w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
@@ -68,17 +68,28 @@ const EventMain = () => {
       onSearch={onSearch}
     />
   </div>
+  
       <div className="flex flex-wrap justify-center">
+      <>
+      {(eventData?.data.length == 0)?<><div className="alert-container">
+              <div id="alert-border-3" className="flex items-center p-4 mb-4 text-purple-800 border-t-4 border-purple-300 bg-purple-50 dark:text-purple-400 dark:bg-gray-800 dark:border-purple-800" role="alert">
+                <svg className="flex-shrink-0 w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+                  <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z" />
+                </svg>
+                <div className="ml-3 text-sm font-medium">
+                  Bulunduğunuz sayfada herhangi bir veri yoktur
+                </div>
+                <button type="button" className="ml-auto -mx-1.5 -my-1.5 bg-green-50 text-green-500 rounded-lg focus:ring-2 focus:ring-green-400 p-1.5 hover:bg-green-200 inline-flex items-center justify-center h-8 w-8 dark:bg-gray-800 dark:text-green-400 dark:hover:bg-gray-700" data-dismiss-target="#alert-border-3" aria-label="Close">
+                </button>
+              </div>
+            </div>
+</> : <></>}
+      </>
         {event?.map((item: IEvent, key: number) => {
           return (
             <div key={key} className="max-w-sm flex-shrink-0 w-full sm:w-auto bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 m-5">
               <a href="#">
-                {
-                  (key >= 4) ?
-                  <img className="rounded-t-lg" style={{width:"80%"}} src="https://cdn-icons-png.flaticon.com/128/10655/10655641.png" alt="" />
-                  :
-                  <img className="rounded-t-lg" style={{width:"100%"}} src={`../../src/assets/images${key}.jpeg`} alt="" />
-                }
+              <img className="rounded-t-lg" style={{width:"100%"}} src={`../../src/assets/event/images${key}.jpeg`} alt="" />
               </a>
               <div className="p-5">
                 <a href="#">
@@ -105,6 +116,7 @@ const EventMain = () => {
     Previous
   </a>
   </button>
+  <div className="text-lg font-bold mx-3">{currentPage + 1}</div>
   <button onClick={onClickNext}>
   <a  className="flex items-center justify-center px-3 h-8 text-sm font-medium text-gray-500 bg-white border border-gray-300 rounded-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">
     Next

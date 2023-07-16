@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { IUserParams } from "../../../models/user";
 import { DatePicker, DatePickerProps, Form, Input } from "antd";
 import DynamicForm from "../../../components/DynamicForm";
-import { AppleOutlined, LockOutlined, LoginOutlined, TabletOutlined, UserOutlined } from "@ant-design/icons";
+import {  LockOutlined, LoginOutlined, TabletOutlined, UserOutlined } from "@ant-design/icons";
 import './index.scss';
 import { useUser } from "../../../services/user/user";
 import { IDynamicForm } from "../../../models/common";
@@ -15,7 +15,7 @@ const Register = () => {
   const [birthDate, setBirthDate] = useState(Date);
   const [loadingBtn, setLoadingBtn] = useState<boolean>(false);
   const userMutation = useUser();
-
+  console.log(loadingBtn)
   useEffect(() => {
     console.log("doğum tarihi: ", birthDate)
     console.log("role: ", role)
@@ -26,17 +26,16 @@ const Register = () => {
     try {
       form.role = role;
       form.birthDate = birthDate;
-      const user = await userMutation.mutateAsync(form)
+      await userMutation.mutateAsync(form)
       setSuccessMessage("Kayıt başarıyla tamamlandı. E-Posta onayı yaptıkdan sonra giriş yapabilirsiniz");
       setLoadingBtn(false);
-
     } catch (error) {
       setLoadingBtn(false);
     }
   };
 
   const onChange: DatePickerProps['onChange'] = (date, dateString) => {
-    console.log(dateString, "date string")
+    console.log(dateString, "date string",date)
     const isoStringDate = new Date(dateString).toISOString();
     setBirthDate(isoStringDate);
   };

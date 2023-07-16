@@ -1,4 +1,3 @@
-import { useEffect, useState } from "react";
 import { ICard } from "../../models/card";
 
 interface IProps {
@@ -7,6 +6,7 @@ interface IProps {
 }
 
 const CardExtreComponent = ({ onChange, value }: IProps) => {
+    onChange
     return (
         <>
         {
