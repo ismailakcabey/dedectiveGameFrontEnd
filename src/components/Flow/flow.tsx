@@ -90,6 +90,7 @@ const BasicFlow = ({ onChange, value }: IProps) => {
 
     storedNodePositions.forEach((key) => {
       const nodeId = key.replace("nodePosition_", "");
+      //@ts-ignore
       const nodePosition = JSON.parse(localStorage.getItem(key));
 
       if (nodePosition) {
@@ -102,7 +103,7 @@ const BasicFlow = ({ onChange, value }: IProps) => {
           }
           return node;
         });
-
+        //@ts-ignore
         onNodesChange(updatedNodes);
       }
     });
@@ -116,9 +117,10 @@ const BasicFlow = ({ onChange, value }: IProps) => {
       onEdgesChange={onEdgesChange}
       onConnect={onConnect}
       nodeTypes={nodeTypes}
+      //@ts-ignore
       onNodeDragStop={onNodeMove}
       fitView
-      style={{ padding: "30%" }}
+      style={{ padding: "20%" }}
     >
       <Background />
     </ReactFlow>

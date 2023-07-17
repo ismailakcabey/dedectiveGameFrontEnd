@@ -15,6 +15,7 @@ const HappendSchema = ({ onChange, value }: IProps) => {
         Olay Şeması
         </div>
         <Flow value={value}/>
+        <div></div>
         </>
     )
 }
