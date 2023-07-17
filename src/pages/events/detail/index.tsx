@@ -15,9 +15,11 @@ const EventDetail = () => {
     const { isFetching, data: event, refetch,isLoading ,isError} = useGetEventId(id);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [component,setComponent] = useState<number>(2)
+    const [currentExpression,setCurrentExpression] = useState<IExpression>()
     useEffect(()=>{
         console.log(component)
-    }, [component,setComponent])
+        console.log(currentExpression)
+    }, [component,setComponent,currentExpression,setCurrentExpression])
     console.log(event)
     const buttonArray = [
         {
@@ -70,7 +72,9 @@ const EventDetail = () => {
         }
     }
 
-    const showModal = () => {
+    const showModal = (index:number) => {
+      console.log("indexinci eleman: " + JSON.stringify(index))
+      setCurrentExpression(event?.expression[index])
       setIsModalOpen(true);
     };
   
@@ -81,6 +85,25 @@ const EventDetail = () => {
     const handleCancel = () => {
       setIsModalOpen(false);
     };
+
+    const ResolveComponent = () => {
+      return(
+        <div>
+          {
+            (currentExpression?.guilty == true) ? <>
+            Cevap Doğru Olayın Tam Hikayesi Bu Şekildedir.
+            <br />
+            {event?.event.realHistory}
+            </>: <><svg className="flex-shrink-0 w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+                  <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z" />
+                </svg>
+                <div className="ml-3 text-sm font-medium">
+                Verdiğiniz Cevap Hatalı Lütfen Biraz Daha Düşünüp Ayrıntılara Odaklanın
+                </div></>
+          }
+        </div>
+      )
+    }
     
     return(
         <>
@@ -106,6 +129,9 @@ const EventDetail = () => {
   
 <p className="mb-3 text-gray-500 dark:text-gray-400 first-line:uppercase first-line:tracking-widest first-letter:text-7xl first-letter:font-bold first-letter:text-gray-900 dark:first-letter:text-gray-100 first-letter:mr-3 first-letter:float-left">{event?.event.news}</p>
 
+<Modal title="Cevap" open={isModalOpen} onOk={handleOk} onCancel={handleCancel}>
+        <ResolveComponent/>
+      </Modal>
 
   <div className="flex flex-wrap justify-center mx-5 my-5">
     {buttonArray.map((item: any, index) => (
@@ -130,7 +156,9 @@ const EventDetail = () => {
     {event?.expression.map((item: IExpression, index) => (
       <button
         key={index}
-        onClick={showModal}
+        onClick={()=>{
+          showModal(index)
+        }}
         type="button"
         className={`text-white bg-gradient-to-br from-purple-600 to-blue-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mx-2 my-2`}
       >
@@ -148,3 +176,4 @@ const EventDetail = () => {
     )
 }
 export default EventDetail
+

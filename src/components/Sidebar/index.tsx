@@ -64,16 +64,12 @@ const Sidebar = (
         <div className="flex flex-col h-screen bg-gray-50 dark:bg-gray-800">
           <div className="flex items-center justify-between p-4">
             <div className="flex flex-col items-center pb-10">
-              <div className="flex items-center">
-                <img
-                  className="w-24 h-24 mb-3 rounded-full shadow-lg"
-                  src="https://cdn-icons-png.flaticon.com/128/3067/3067684.png"
-                  alt="Bonnie image"
-                />
-                <h5 className="mb-1 text-xl font-medium text-gray-900 dark:text-white">
-                  Dedective Game
-                </h5>
-              </div>
+            <Link to="/events">
+            <a href="#" className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
+            <img className="w-24 h-24 mb-3 rounded-full shadow-lg" src="https://cdn-icons-png.flaticon.com/128/3067/3067684.png" alt="Bonnie image" />
+  <h5 className="mb-1 text-xl font-medium text-gray-900 dark:text-white">Dedective Game</h5>
+            </a>
+            </Link>
             </div>
             {!isMobileView ? null : (
               <button

@@ -7,6 +7,7 @@ export interface IEvent {
     imageUrl:string;
     summary:string;
     news:string;
+    realHistory:string;
 }
 
 

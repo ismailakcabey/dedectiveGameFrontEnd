@@ -26,7 +26,6 @@ const nodeTypes = {
 };
 
 const BasicFlow = ({ onChange, value }: IProps) => {
-    onChange
   const initialNodes: Node[] = value
     ? value.map((item, index) => {
         const storedPosition = localStorage.getItem(`nodePosition_${index}`);
@@ -75,7 +74,7 @@ const BasicFlow = ({ onChange, value }: IProps) => {
   );
 
   const onNodeMove = useCallback(
-    (node: Node) => {
+    (event: MouseEvent, node: Node) => {
       localStorage.setItem(
         `nodePosition_${node.id}`,
         JSON.stringify(node.position)
@@ -91,7 +90,6 @@ const BasicFlow = ({ onChange, value }: IProps) => {
 
     storedNodePositions.forEach((key) => {
       const nodeId = key.replace("nodePosition_", "");
-      //@ts-ignore
       const nodePosition = JSON.parse(localStorage.getItem(key));
 
       if (nodePosition) {
@@ -104,7 +102,7 @@ const BasicFlow = ({ onChange, value }: IProps) => {
           }
           return node;
         });
-        //@ts-ignore
+
         onNodesChange(updatedNodes);
       }
     });
@@ -118,10 +116,9 @@ const BasicFlow = ({ onChange, value }: IProps) => {
       onEdgesChange={onEdgesChange}
       onConnect={onConnect}
       nodeTypes={nodeTypes}
-      //@ts-ignore
       onNodeDragStop={onNodeMove}
       fitView
-      style={{ padding: "20%" }}
+      style={{ padding: "30%" }}
     >
       <Background />
     </ReactFlow>
