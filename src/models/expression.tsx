@@ -17,3 +17,25 @@ export interface IExpression{
     placeOfBirth:string;
     text:string;
 }
+
+export interface IExpressionDto{
+    declaration:string;
+    expressionDate:string;
+    fatherName:string;
+    guilty:boolean;
+    identityNumber:string;
+    imageBase64:string;
+    learnStatus:string;
+    martialStatus:string;
+    motherName:string;
+    personName:string;
+    phoneNumber:string;
+    place:string;
+    placeOfBirth:string;
+    text:string;
+}
+
+export interface IExpressionResponse{
+    data:IExpression[];
+    count:number
+}

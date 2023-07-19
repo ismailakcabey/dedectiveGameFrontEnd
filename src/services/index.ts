@@ -13,6 +13,21 @@ export const APIS = {
     EVENT: API_PREFIX + '/event',
   },
 
+  CLUE: {
+    CLUEEVENT: API_PREFIX + '/clue/event',
+    CLUE: API_PREFIX + '/clue',
+  },
+
+  EXPRESSION: {
+    EXPRESSIONEVENT: API_PREFIX + '/expression/event',
+    EXPRESSION: API_PREFIX + '/expression',
+  },
+
+  CARD: {
+    CARDEVENT: API_PREFIX + '/card-extra/event',
+    CARD: API_PREFIX + '/card-extra',
+  },
+
   REPORT: {
     REPORT: API_PREFIX + '/report',
   }

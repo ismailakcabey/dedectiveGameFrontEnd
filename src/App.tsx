@@ -15,10 +15,6 @@ function App() {
     name: "Olaylar"
 },
 {
-  link:"/event/create",
-  name: "Olay Oluştur"
-},
-{
   link:"/team/meet",
   name: "Takım Çalışması"
 },

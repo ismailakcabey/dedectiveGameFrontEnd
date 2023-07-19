@@ -1,12 +1,14 @@
 import { Input } from 'antd';
 import { IEvent } from "../../../models/event";
-import { useGetEvent } from "../../../services/event";
+import { useCreateEvent, useGetEvent } from "../../../services/event";
 import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 
 const EventMain = () => {
     const { Search } = Input;
   const [search,setSearch] = useState<string>()
+  const navigate = useNavigate();
   const [currentPage,setCurrentPage] = useState<number>(0)
     let query = {
         where: {
@@ -18,6 +20,15 @@ const EventMain = () => {
     }
 
     const { data: eventData, refetch,isLoading } = useGetEvent(query);
+    const { mutateAsync } = useCreateEvent();
+
+    const createEvent = async () => {
+      console.log("burada")
+      const data = await mutateAsync({name:"",summary:"",news:"",realHistory:"",imageBase64:""})
+      
+      console.log(JSON.stringify(data),"data değeri bu")
+      navigate({ pathname: `/event/update/${data.id}` });
+    }
     console.log(isLoading)
     useEffect(()=>{
         console.log(search)
@@ -60,13 +71,14 @@ const EventMain = () => {
               </div>
             </div>
 </>:<></>}
-     <div className="w-10/12 sm:w-80 mx-auto ">
+     <div className="w-10/12 sm:w-80 mx-auto flex ">
      <Search
       placeholder="Mağdur Adı İle Arama"
       allowClear
       enterButton="Search"
       onSearch={onSearch}
-    />
+      style={{width: '100%'}}
+    /><button type="button" onClick={createEvent} className="text-white bg-gradient-to-r from-purple-500 to-pink-500 hover:bg-gradient-to-l focus:ring-4 focus:outline-none focus:ring-purple-200 dark:focus:ring-purple-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2">Vaka oluştur</button>
   </div>
   
       <div className="flex flex-wrap justify-center">

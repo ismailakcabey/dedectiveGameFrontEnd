@@ -7,3 +7,14 @@ export interface ICard{
     price:string;
     product:string;
 }
+
+export interface ICardDto{
+    payer:string;
+    price:number;
+    product:string;
+}
+
+export interface ICardResponse{
+    data:ICard;
+    counter:number;
+}
