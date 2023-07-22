@@ -1,4 +1,4 @@
-import { Button, DatePicker, DatePickerProps, Form, Input, Popover, Switch, Upload, UploadProps, message } from "antd";
+import { Button, DatePicker, DatePickerProps, Form, Input, Modal, Popover, Switch, Upload, UploadProps, message } from "antd";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { useCreateExpression, useDeleteExpression, useGetExpression } from "../../../../services/expression";
@@ -20,6 +20,8 @@ const ExpressionUpdate = () => {
     const [expressionDate, setExpressionDate] = useState(Date);
     const [guilty, setGuilty] = useState<boolean>(true);
     const { mutateAsync: itemDelete } = useDeleteExpression();
+    const [isModalOpen, setIsModalOpen] = useState(false);
+
     useEffect(() => {
       }, [guilty, setGuilty, setExpressionDate,expressionDate])
     const onChange: DatePickerProps['onChange'] = (date, dateString) => {
@@ -243,11 +245,16 @@ const ExpressionUpdate = () => {
           setLoadingBtn(false);
         }
       };
-
       const deleteItem = async (item:any) => {
         await itemDelete(item.id!);
         refetch()
       }
+      const showModal = () => {
+        setIsModalOpen(true);
+      };
+      const handleCancel = () => {
+        setIsModalOpen(false);
+      };
     return(
         <div>
             <DynamicForm
@@ -312,19 +319,18 @@ const ExpressionUpdate = () => {
             {date.toDateString()}
           </th>
           <td className="px-3 py-4">
-            <Popover
-              content={<ExpressionComponentSingle value={item}/>}
-              title={`${item.personName} ifadesine ait detay`}
-            >
+          <Modal width={"60%"} title={item.personName + " Kişisinin ifadesi"} open={isModalOpen}  onCancel={handleCancel}>
+          <ExpressionComponentSingle value={item}/>
+            </Modal>
               <button
                 type="button"
                 className="text-white bg-gradient-to-br from-purple-600 to-blue-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mx-2 my-2"
                 data-dismiss-target="#alert-border-3"
                 aria-label="Close"
+                onClick={showModal}
               >
                 Oku
               </button>
-            </Popover>
             <button type="button" onClick={()=>{
                 deleteItem(item)
             }} className="text-white bg-gradient-to-r from-red-400 via-red-500 to-red-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2">Sil</button>

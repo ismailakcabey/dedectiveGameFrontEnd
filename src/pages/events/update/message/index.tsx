@@ -20,6 +20,7 @@ const MessageUpdate = () => {
     //@ts-ignore
     const { data: messageData, refetch,isLoading } = useGetMessage(id);
     const { mutateAsync: itemDeleteMessage } = useDeleteMessage();
+    const [isModalOpen, setIsModalOpen] = useState(false);
     useEffect(()=>{
 
     },[message,setMessage])
@@ -68,6 +69,12 @@ const MessageUpdate = () => {
         } catch (error) {
           setLoadingBtn(false);
         }
+      };
+      const showModal = () => {
+        setIsModalOpen(true);
+      };
+      const handleCancel = () => {
+        setIsModalOpen(false);
       };
     return(
         <div>

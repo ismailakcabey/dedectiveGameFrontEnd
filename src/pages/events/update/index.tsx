@@ -47,7 +47,6 @@ const EventUpdate = () => {
              <label  className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Olay Başlığı</label>
             <TextArea
               style={{ marginBottom: "8px" }}
-              defaultValue={event?.event.name}
               placeholder="olayın adını giriniz"/>
           </div>,
           responsive: { xs: 24, md: 12 },

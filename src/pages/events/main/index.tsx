@@ -2,19 +2,25 @@ import { Input } from 'antd';
 import { IEvent } from "../../../models/event";
 import { useCreateEvent, useGetEvent } from "../../../services/event";
 import { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { IUser } from '../../../models/user';
+import { LocalStorageUtils } from '../../../utils/localstorage';
+import { EKEYS } from '../../../config';
 
 
 const EventMain = () => {
     const { Search } = Input;
   const [search,setSearch] = useState<string>()
   const navigate = useNavigate();
+  //@ts-ignore
+  const user:IUser = LocalStorageUtils.getItem(EKEYS.userKey)
   const [currentPage,setCurrentPage] = useState<number>(0)
     let query = {
         where: {
             name:(search) ? search : null,
             
         },
+        loadRelationIds:true,
         take:6,
         skip:currentPage*6
     }
@@ -98,6 +104,7 @@ const EventMain = () => {
 </> : <></>}
       </>
         {event?.map((item: IEvent, key: number) => {
+
           return (
             <div key={key} className="max-w-sm flex-shrink-0 w-full sm:w-auto bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 m-5">
               <a href="#">
@@ -108,12 +115,31 @@ const EventMain = () => {
                   <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">{item.name}</h5>
                 </a>
                 <p className="mb-3 font-normal text-gray-700 dark:text-gray-400">{item.summary}</p>
-                <a href={`/events/${item.id}`} className="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                <Link to={`/events/${item.id}`}>
+                  <button  className='text-white bg-gradient-to-r from-purple-500 to-pink-500 hover:bg-gradient-to-l focus:ring-4 focus:outline-none focus:ring-purple-200 dark:focus:ring-purple-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2'>
                   Vakayı Çöz
                   <svg className="w-3.5 h-3.5 ml-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
                     <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M1 5h12m0 0L9 1m4 4L9 9" />
                   </svg>
-                </a>
+                  </button>
+                  
+                
+                </Link>
+                
+                {
+                  //@ts-ignore
+                  (item?.createdUser == user.id) ? <>
+                  <Link to={`/event/update/${item.id}`}>
+                  <button className='text-white bg-gradient-to-r from-purple-500 to-blue-500 hover:bg-gradient-to-l focus:ring-4 focus:outline-none focus:ring-purple-200 dark:focus:ring-purple-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2'>
+                  Vakayı Güncelle 
+                  <svg className="w-3.5 h-3.5 ml-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
+                    <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M1 5h12m0 0L9 1m4 4L9 9" />
+                  </svg>
+                  </button>
+                  
+                </Link>
+                  </>:<></>
+                }
               </div>
             </div>
           );
