@@ -1,6 +1,6 @@
 import { APIS } from ".."
 import { IClue, IClueDto, IClueResponse } from "../../models/clue"
-import { useCreate, useDelete, useGet, useGetIdDedective, useGetList } from "../request"
+import { useCreate, useDelete, useGetIdDedective } from "../request"
 
 export const useCreateClue = () => {
     return useCreate<IClueDto,IClue>(APIS.CLUE.CLUE)

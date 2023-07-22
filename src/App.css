@@ -19,10 +19,3 @@
 #app {
   position: relative;
 }
-
-.sidebar-container {
-  position: fixed;
-  top: 0;
-  left: 0;
-  /* Diğer stiller */
-}

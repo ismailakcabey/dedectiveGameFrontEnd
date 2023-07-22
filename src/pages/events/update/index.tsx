@@ -11,6 +11,7 @@ import TextArea from "antd/es/input/TextArea";
 import { IClue } from "../../../models/clue";
 import ExpressionUpdate from "./expression";
 import CardExtraUpdate from "./cardExtra";
+import MessageUpdate from "./message";
 
 const EventUpdate = () => {
     const { id } = useParams();
@@ -138,6 +139,11 @@ const EventUpdate = () => {
     <div className="mb-5 border border-gray-300 rounded-lg px-5 py-5">
         <h1>Olaya İlişkin Kart Ekstreleri</h1>
         <CardExtraUpdate/>
+    </div>
+    <Divider />
+    <div className="mb-5 border border-gray-300 rounded-lg px-5 py-5">
+        <h1>Olaya İlişkin Mesajlaşmalar</h1>
+        <MessageUpdate/>
     </div>
     <Divider />
   </div>

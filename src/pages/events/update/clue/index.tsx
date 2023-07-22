@@ -8,6 +8,7 @@ import { IClue, IClueDto } from "../../../../models/clue";
 import DynamicForm from "../../../../components/DynamicForm";
 import { useCreateClue, useDeleteClue, useGetClue } from "../../../../services/clue";
 import TextArea from "antd/es/input/TextArea";
+import ClueComponentSingle from "../../../../components/Clue/clueSingle";
 
 const ClueUpdate = () => {
     const { id } = useParams();
@@ -131,7 +132,7 @@ const ClueUpdate = () => {
           </th>
           <td className="px-3 py-4">
             <Popover
-              content={<>deneme</>}
+              content={<ClueComponentSingle value={item}/>}
               title={`${item.name} ipucuna ait detay`}
             >
               <button

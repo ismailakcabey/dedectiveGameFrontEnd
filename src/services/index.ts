@@ -23,6 +23,11 @@ export const APIS = {
     EXPRESSION: API_PREFIX + '/expression',
   },
 
+  MESSAGE: {
+    MESSAGEEVENT: API_PREFIX + '/message/event',
+    MESSAGE: API_PREFIX + '/message',
+  },
+
   CARD: {
     CARDEVENT: API_PREFIX + '/card-extra/event',
     CARD: API_PREFIX + '/card-extra',

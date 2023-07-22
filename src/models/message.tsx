@@ -11,3 +11,19 @@ export interface IMessage{
         }
     ]
 }
+
+export interface IMessageDto{
+    receiver:string;
+    sender:string;
+    messages:[
+        {
+            person:string,
+            text:string
+        }
+    ]
+}
+
+export interface IMessageResponse{
+    data:IMessage[];
+    count:number;
+}

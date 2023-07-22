@@ -7,6 +7,7 @@ import TextArea from "antd/es/input/TextArea";
 import { IDynamicForm } from "../../../../models/common";
 import DynamicForm from "../../../../components/DynamicForm";
 import { IExpression, IExpressionDto } from "../../../../models/expression";
+import ExpressionComponentSingle from "../../../../components/Expression/expressionSingle";
 
 const ExpressionUpdate = () => {
     const { id } = useParams();
@@ -312,7 +313,7 @@ const ExpressionUpdate = () => {
           </th>
           <td className="px-3 py-4">
             <Popover
-              content={<>deneme</>}
+              content={<ExpressionComponentSingle value={item}/>}
               title={`${item.personName} ifadesine ait detay`}
             >
               <button
