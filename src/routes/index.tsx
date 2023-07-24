@@ -11,6 +11,7 @@ import NotFound from '../pages/notFound';
 import EventMain from '../pages/events/main';
 import EventDetail from '../pages/events/detail';
 import EventUpdate from '../pages/events/update';
+import TeamsMain from '../pages/teams/main';
  class Routers extends Component {  
      render(): ReactNode {
          return(
@@ -22,6 +23,7 @@ import EventUpdate from '../pages/events/update';
           <Route path='/profile' element={<></>}/>
            <Route path="/" element={<DashBoard />} />
            <Route path="/events" element={<EventMain />} />
+           <Route path="/teams" element={<TeamsMain />} />
            <Route path="/events/:id" element={<EventDetail />} />
            <Route path="/event/update/:id" element={<EventUpdate />} />
           </Route>

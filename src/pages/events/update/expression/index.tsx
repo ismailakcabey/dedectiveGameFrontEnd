@@ -1,4 +1,4 @@
-import { Button, DatePicker, DatePickerProps, Form, Input, Modal, Popover, Switch, Upload, UploadProps, message } from "antd";
+import { Button, DatePicker, DatePickerProps, Form, Input, Modal, Popover, Switch, Upload, UploadProps, message, notification } from "antd";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { useCreateExpression, useDeleteExpression, useGetExpression } from "../../../../services/expression";
@@ -22,7 +22,15 @@ const ExpressionUpdate = () => {
     const { mutateAsync: itemDelete } = useDeleteExpression();
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [currentExpression, setCurrentExpression] = useState<IExpression>()
-
+    const [api, contextHolder] = notification.useNotification();
+    const openNotificationWithIcon = (type: Notification,desc:string) => {
+      //@ts-ignore
+      api[type]({
+        message: 'Bildirim',
+        description:
+          desc,
+      });
+    };
     useEffect(() => {
 
       }, [guilty, setGuilty, setExpressionDate,expressionDate,currentExpression,setCurrentExpression])
@@ -241,13 +249,19 @@ const ExpressionUpdate = () => {
             form.expressionDate = expressionDate
             form.guilty = guilty
           const result = await mutateAsync(form)
+          //@ts-ignore
+        openNotificationWithIcon('success','Başarılı bir şekilde kayıt oluşturdunuz e-posta kutunuzu kontrol ediniz.')
           refetch()
           setLoadingBtn(false);
         } catch (error) {
+          //@ts-ignore
+        openNotificationWithIcon('warning','Bir sorun oluştu')
           setLoadingBtn(false);
         }
       };
       const deleteItem = async (item:any) => {
+         //@ts-ignore
+         openNotificationWithIcon('success','Başarılı bir şekilde kayıt oluşturdunuz e-posta kutunuzu kontrol ediniz.')
         await itemDelete(item.id!);
         refetch()
       }
@@ -260,6 +274,7 @@ const ExpressionUpdate = () => {
       };
     return(
         <div>
+          {contextHolder}
             <DynamicForm
             form={form}
             formFields={formFieldsData}

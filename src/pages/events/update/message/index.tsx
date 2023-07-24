@@ -1,4 +1,4 @@
-import { Form, Input, Popover } from "antd";
+import { Form, Input, Popover, notification } from "antd";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { useCreateMessage, useDeleteMessage, useGetMessage } from "../../../../services/message";
@@ -21,12 +21,30 @@ const MessageUpdate = () => {
     const { data: messageData, refetch,isLoading } = useGetMessage(id);
     const { mutateAsync: itemDeleteMessage } = useDeleteMessage();
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const [api, contextHolder] = notification.useNotification();
+    const openNotificationWithIcon = (type: Notification,desc:string) => {
+      //@ts-ignore
+      api[type]({
+        message: 'Bildirim',
+        description:
+          desc,
+      });
+    };
     useEffect(()=>{
-
     },[message,setMessage])
     const deleteItem = async (item:any) => {
+      try {
         await itemDeleteMessage(item.id!);
         refetch()
+        //@ts-ignore
+        openNotificationWithIcon('success','Başarılı bir şekilde kayıt güncellediniz')
+        setLoadingBtn(false)
+      } catch (error) {
+        //@ts-ignore
+        openNotificationWithIcon('error','Bir sorun oluştu')
+          setLoadingBtn(false);
+      }
+        
       }
       const formFieldsData = [
         {
@@ -64,9 +82,13 @@ const MessageUpdate = () => {
             //@ts-ignore
             form.messages = messageDataContent
           const result = await mutateAsync(form)
+          //@ts-ignore
+          openNotificationWithIcon('success','Başarılı bir şekilde kayıt güncellediniz')
           refetch()
           setLoadingBtn(false);
         } catch (error) {
+           //@ts-ignore
+           openNotificationWithIcon('error','Bir sorun oluştu')
           setLoadingBtn(false);
         }
       };
@@ -78,6 +100,7 @@ const MessageUpdate = () => {
       };
     return(
         <div>
+          {contextHolder}
           <div className="mb-5">
           <MessageContent messageDataContent={messageDataContent} setMessageDataContent={setMessageDataContent}/>
           </div>

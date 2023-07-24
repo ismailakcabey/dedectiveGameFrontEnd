@@ -35,6 +35,11 @@ export const APIS = {
 
   REPORT: {
     REPORT: API_PREFIX + '/report',
+  },
+
+  TEAMS: {
+    TEAMS: API_PREFIX + '/team',
+    JOIN: API_PREFIX + '/team/join',
   }
 
 };

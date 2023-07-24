@@ -1,6 +1,6 @@
 import { useParams } from "react-router-dom";
 import { useGetEventId, useUpdateEvent } from "../../../services/event";
-import { Button, Divider, Form, Input, Popover, Upload, UploadProps, message } from "antd";
+import { Button, Divider, Form, Input, Popover, Upload, UploadProps, message, notification } from "antd";
 import { LockOutlined, SaveOutlined, TabletOutlined, UploadOutlined, UserOutlined } from "@ant-design/icons";
 import { IDynamicForm } from "../../../models/common";
 import DynamicForm from "../../../components/DynamicForm";
@@ -16,6 +16,15 @@ import MessageUpdate from "./message";
 const EventUpdate = () => {
     const { id } = useParams();
     const [loadingBtn, setLoadingBtn] = useState<boolean>(false);
+    const [api, contextHolder] = notification.useNotification();
+    const openNotificationWithIcon = (type: Notification,desc:string) => {
+      //@ts-ignore
+      api[type]({
+        message: 'Bildirim',
+        description:
+          desc,
+      });
+    };
     //@ts-ignore
     const { isFetching, data: event, refetch,isLoading ,isError} = useGetEventId(id);
     const [form] = Form.useForm();
@@ -114,14 +123,19 @@ const EventUpdate = () => {
         setLoadingBtn(true);
         try {
           const result = await mutateAsync(form)
+          //@ts-ignore
+          openNotificationWithIcon('success','Başarılı bir şekilde kayıt güncellediniz')
           setLoadingBtn(false);
         } catch (error) {
+          //@ts-ignore
+          openNotificationWithIcon('error','Bir sorun oluştu')
           setLoadingBtn(false);
         }
       };
     console.log(event);
     return(
         <div>
+          {contextHolder}
     <div className="mb-5 border border-gray-300 rounded-lg px-5 py-5">
         <h1>Genel Olay Formu</h1>
     <DynamicForm

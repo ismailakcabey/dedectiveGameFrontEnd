@@ -1,5 +1,5 @@
-import { Form, Input } from "antd";
-import { useState } from "react";
+import { Form, Input, notification } from "antd";
+import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { useCreateCardExtra, useDeleteCardExtra, useGetCardExtra } from "../../../../services/cardExtra";
 import { SaveOutlined, UserOutlined } from "@ant-design/icons";
@@ -16,10 +16,23 @@ const CardExtraUpdate = () => {
     //@ts-ignore
     const { data: cardExtraData, refetch,isLoading } = useGetCardExtra(id);
     const { mutateAsync: itemDeleteClue } = useDeleteCardExtra();
+    const [api, contextHolder] = notification.useNotification();
+    const openNotificationWithIcon = (type: Notification,desc:string) => {
+      //@ts-ignore
+      api[type]({
+        message: 'Bildirim',
+        description:
+          desc,
+      });
+    };
     const deleteItem = async (item:any) => {
         await itemDeleteClue(item.id!);
+        //@ts-ignore
+        openNotificationWithIcon('success','Başarılı bir şekilde kayıt güncellediniz')
         refetch()
       }
+      useEffect(()=>{
+      },[setLoadingBtn,loadingBtn])
       const formFieldsData = [
         {
           label: '',
@@ -70,14 +83,19 @@ const CardExtraUpdate = () => {
             //@ts-ignore
             form.price = parseInt(form.price)
           const result = await mutateAsync(form)
+          //@ts-ignore
+        openNotificationWithIcon('success','Başarılı bir şekilde kayıt güncellediniz')
           refetch()
           setLoadingBtn(false);
         } catch (error) {
+          //@ts-ignore
+        openNotificationWithIcon('error','Bir sorun oluştu')
           setLoadingBtn(false);
         }
       };
       return(
         <div>
+          {contextHolder}
         <DynamicForm
         form={form}
         formFields={formFieldsData}

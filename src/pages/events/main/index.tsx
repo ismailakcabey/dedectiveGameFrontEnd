@@ -1,4 +1,4 @@
-import { Input } from 'antd';
+import { Input, notification } from 'antd';
 import { IEvent } from "../../../models/event";
 import { useCreateEvent, useGetEvent } from "../../../services/event";
 import { useEffect, useState } from 'react';
@@ -14,6 +14,16 @@ const EventMain = () => {
   const navigate = useNavigate();
   //@ts-ignore
   const user:IUser = LocalStorageUtils.getItem(EKEYS.userKey)
+  const [api, contextHolder] = notification.useNotification();
+  const [successMessage, setSuccessMessage] = useState<string | null>(null);
+  const openNotificationWithIcon = (type: Notification,desc:string) => {
+    //@ts-ignore
+    api[type]({
+      message: 'Bildirim',
+      description:
+        desc,
+    });
+  };
   const [currentPage,setCurrentPage] = useState<number>(0)
     let query = {
         where: {
@@ -29,17 +39,25 @@ const EventMain = () => {
     const { mutateAsync } = useCreateEvent();
 
     const createEvent = async () => {
-      console.log("burada")
-      const data = await mutateAsync({name:"",summary:"",news:"",realHistory:"",imageBase64:""})
-      
-      console.log(JSON.stringify(data),"data değeri bu")
+      try {
+        const data = await mutateAsync({name:"",summary:"",news:"",realHistory:"",imageBase64:""})
+        //@ts-ignore
+        openNotificationWithIcon('success','Başarılı bir şekilde kayıt oluşturdunuz e-posta kutunuzu kontrol ediniz.')
       navigate({ pathname: `/event/update/${data.id}` });
+      } catch (error) {
+        //@ts-ignore
+        openNotificationWithIcon('warning','Bir sorun oluştu')
+      }
     }
     console.log(isLoading)
     useEffect(()=>{
         console.log(search)
         console.log(currentPage)
         console.log(query)
+        if(isLoading){
+          //@ts-ignore
+          openNotificationWithIcon('warning','Veriler yükleniyor')
+      }
         refetch();
       },[search,currentPage])
     console.log(eventData?.data,"eventData")
@@ -63,20 +81,7 @@ const EventMain = () => {
     
   return (
     <>
-    
-    {(isLoading)?<><div className="alert-container">
-              <div id="alert-border-3" className="flex items-center p-4 mb-4 text-purple-800 border-t-4 border-purple-300 bg-purple-50 dark:text-purple-400 dark:bg-gray-800 dark:border-purple-800" role="alert">
-                <svg className="flex-shrink-0 w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
-                  <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z" />
-                </svg>
-                <div className="ml-3 text-sm font-medium">
-                  Bir Sorun oluştu lütfen daha sonra tekrar deneyiniz
-                </div>
-                <button type="button" className="ml-auto -mx-1.5 -my-1.5 bg-green-50 text-green-500 rounded-lg focus:ring-2 focus:ring-green-400 p-1.5 hover:bg-green-200 inline-flex items-center justify-center h-8 w-8 dark:bg-gray-800 dark:text-green-400 dark:hover:bg-gray-700" data-dismiss-target="#alert-border-3" aria-label="Close">
-                </button>
-              </div>
-            </div>
-</>:<></>}
+    {contextHolder}
      <div className="w-10/12 sm:w-80 mx-auto flex ">
      <Search
       placeholder="Mağdur Adı İle Arama"

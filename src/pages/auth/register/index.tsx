@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { IUserParams } from "../../../models/user";
-import { DatePicker, DatePickerProps, Form, Input } from "antd";
+import { DatePicker, DatePickerProps, Form, Input, notification } from "antd";
 import DynamicForm from "../../../components/DynamicForm";
 import {  LockOutlined, LoginOutlined, TabletOutlined, UserOutlined } from "@ant-design/icons";
 import './index.scss';
@@ -20,7 +20,15 @@ const Register = () => {
     console.log("doğum tarihi: ", birthDate)
     console.log("role: ", role)
   }, [role, birthDate])
-
+  const [api, contextHolder] = notification.useNotification();
+  const openNotificationWithIcon = (type: Notification,desc:string) => {
+    //@ts-ignore
+    api[type]({
+      message: 'Bildirim',
+      description:
+        desc,
+    });
+  };
   const onFinish = async (form: IUserParams) => {
     setLoadingBtn(true);
     try {
@@ -29,7 +37,11 @@ const Register = () => {
       await userMutation.mutateAsync(form)
       setSuccessMessage("Kayıt başarıyla tamamlandı. E-Posta onayı yaptıkdan sonra giriş yapabilirsiniz");
       setLoadingBtn(false);
+      //@ts-ignore
+      openNotificationWithIcon('success','Başarılı bir şekilde kayıt oluşturdunuz e-posta kutunuzu kontrol ediniz.')
     } catch (error) {
+      //@ts-ignore
+      openNotificationWithIcon('warning','Bir sorun oluştu')
       setLoadingBtn(false);
     }
   };
@@ -123,6 +135,7 @@ const Register = () => {
 
   return (
     <div className="body">
+      {contextHolder}
       <div className="container">
         <div className="w-full max-w-sm p-4 bg-white border border-gray-200 rounded-lg shadow sm:p-6 md:p-8 dark:bg-gray-800 dark:border-gray-700">
         <h5 className="text-xl font-medium text-gray-900 dark:text-white">Oyuna Kayıt Ol</h5>
@@ -145,20 +158,6 @@ const Register = () => {
       <div className="image-container">
 
         <div>
-          {successMessage && (
-            <div className="alert-container">
-              <div id="alert-border-3" className="flex items-center p-4 mb-4 text-purple-800 border-t-4 border-purple-300 bg-purple-50 dark:text-purple-400 dark:bg-gray-800 dark:border-purple-800" role="alert">
-                <svg className="flex-shrink-0 w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
-                  <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z" />
-                </svg>
-                <div className="ml-3 text-sm font-medium">
-                  Başarılı şekilde kayıt oluşturdunuz <a href="/login" className="font-semibold underline hover:no-underline">bu adresten giriş yapabilirsiniz</a>. Ancak önce e-posta onay işleminizi tamamlamanız gerekmektedir
-                </div>
-                <button type="button" className="ml-auto -mx-1.5 -my-1.5 bg-green-50 text-green-500 rounded-lg focus:ring-2 focus:ring-green-400 p-1.5 hover:bg-green-200 inline-flex items-center justify-center h-8 w-8 dark:bg-gray-800 dark:text-green-400 dark:hover:bg-gray-700" data-dismiss-target="#alert-border-3" aria-label="Close">
-                </button>
-              </div>
-            </div>
-          )}
           <h1 className="mb-4 text-3xl font-extrabold text-gray-900 dark:text-white md:text-5xl lg:text-6xl"><span className="text-transparent bg-clip-text bg-gradient-to-r to-purple-600 from-purple-400">Dedective Game</span> vakaları çözmeni bekliyor</h1>
           <p className="mb-6 text-lg font-normal text-gray-500 lg:text-xl sm:px-16 xl:px-48 dark:text-gray-400">İçeriğinde bulunan vakaları ister çöz ister yeni vaka oluşturarak rakiplerini zorla</p>
           <a href="#" className="inline-flex items-center justify-center px-5 py-3 text-base font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 dark:focus:ring-blue-900">

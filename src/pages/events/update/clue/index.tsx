@@ -1,4 +1,4 @@
-import { Button, Form, Input, Modal, Popover, Upload, UploadProps, message } from "antd";
+import { Button, Form, Input, Modal, Popover, Upload, UploadProps, message, notification } from "antd";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { useUpdateEvent } from "../../../../services/event";
@@ -21,6 +21,15 @@ const ClueUpdate = () => {
   const { data: clueData, refetch, isLoading } = useGetClue(id);
   const { mutateAsync: itemDeleteClue } = useDeleteClue();
   const [currentClue, setCurrentClue] = useState<IClue>()
+  const [api, contextHolder] = notification.useNotification();
+  const openNotificationWithIcon = (type: Notification,desc:string) => {
+    //@ts-ignore
+    api[type]({
+      message: 'Bildirim',
+      description:
+        desc,
+    });
+  };
   const props: UploadProps = {
     name: 'file',
     action: 'https://www.mocky.io/v2/5cc8019d300000980a055e76',
@@ -43,6 +52,8 @@ const ClueUpdate = () => {
   },[currentClue,setCurrentClue])
   const deleteItem = async (item: any) => {
     await itemDeleteClue(item.id!);
+    //@ts-ignore
+    openNotificationWithIcon('success','Başarılı bir şekilde kayıt oluşturdunuz e-posta kutunuzu kontrol ediniz.')
     refetch()
   }
   const showModal = (item:IClue) => {
@@ -101,14 +112,19 @@ const ClueUpdate = () => {
       //@ts-ignore
       form.event = parseInt(id)
       const result = await mutateAsync(form)
+      //@ts-ignore
+      openNotificationWithIcon('success','Başarılı bir şekilde kayıt oluşturdunuz e-posta kutunuzu kontrol ediniz.')
       refetch()
       setLoadingBtn(false);
     } catch (error) {
+      //@ts-ignore
+      openNotificationWithIcon('warning','Bir sorun oluştu')
       setLoadingBtn(false);
     }
   };
   return (
     <div>
+      {contextHolder}
       <DynamicForm
         form={form}
         formFields={formFieldsData}
