@@ -1,5 +1,5 @@
 import { Button, Form, Input, Modal, Popover, Upload, UploadProps, message } from "antd";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { useUpdateEvent } from "../../../../services/event";
 import { SaveOutlined, TabletOutlined, UploadOutlined, UserOutlined } from "@ant-design/icons";
@@ -20,6 +20,7 @@ const ClueUpdate = () => {
   //@ts-ignore
   const { data: clueData, refetch, isLoading } = useGetClue(id);
   const { mutateAsync: itemDeleteClue } = useDeleteClue();
+  const [currentClue, setCurrentClue] = useState<IClue>()
   const props: UploadProps = {
     name: 'file',
     action: 'https://www.mocky.io/v2/5cc8019d300000980a055e76',
@@ -37,11 +38,15 @@ const ClueUpdate = () => {
       }
     },
   };
+  useEffect(()=>{
+
+  },[currentClue,setCurrentClue])
   const deleteItem = async (item: any) => {
     await itemDeleteClue(item.id!);
     refetch()
   }
-  const showModal = () => {
+  const showModal = (item:IClue) => {
+    setCurrentClue(item)
     setIsModalOpen(true);
   };
   const handleCancel = () => {
@@ -138,8 +143,8 @@ const ClueUpdate = () => {
                     {item.name}
                   </th>
                   <td className="px-3 py-4">
-                    <Modal width={"60%"} style={{maxHeight:"70%",overflowY:"auto"}} title={item.name} open={isModalOpen} onCancel={handleCancel}>
-                        <ClueComponentSingle value={item} />
+                    <Modal width={"60%"} style={{maxHeight:"70%",overflowY:"auto"}} title={currentClue?.name} open={isModalOpen} onCancel={handleCancel}>
+                        <ClueComponentSingle value={currentClue} />
                     </Modal>
 
                     <button
@@ -147,7 +152,7 @@ const ClueUpdate = () => {
                       className="text-white bg-gradient-to-br from-purple-600 to-blue-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mx-2 my-2"
                       data-dismiss-target="#alert-border-3"
                       aria-label="Close"
-                      onClick={showModal}
+                      onClick={()=>{showModal(item)}}
                     >
                       Oku
                     </button>

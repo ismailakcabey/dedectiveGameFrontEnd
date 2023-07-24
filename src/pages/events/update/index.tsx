@@ -5,7 +5,7 @@ import { LockOutlined, SaveOutlined, TabletOutlined, UploadOutlined, UserOutline
 import { IDynamicForm } from "../../../models/common";
 import DynamicForm from "../../../components/DynamicForm";
 import { IEventDto } from "../../../models/event";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import ClueUpdate from "./clue";
 import TextArea from "antd/es/input/TextArea";
 import { IClue } from "../../../models/clue";
@@ -19,6 +19,12 @@ const EventUpdate = () => {
     //@ts-ignore
     const { isFetching, data: event, refetch,isLoading ,isError} = useGetEventId(id);
     const [form] = Form.useForm();
+    useEffect(() => {
+      if (event) {
+        form.resetFields();
+      }
+    }, [event]);
+    console.log(event?.event.name)
     //@ts-ignore
     const { mutateAsync } = useUpdateEvent(id?.toString())
     const props: UploadProps = {
@@ -46,6 +52,7 @@ const EventUpdate = () => {
           component: <div>
              <label  className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Olay Başlığı</label>
             <TextArea
+            defaultValue={event?.event.name}
               style={{ marginBottom: "8px" }}
               placeholder="olayın adını giriniz"/>
           </div>,
@@ -58,6 +65,7 @@ const EventUpdate = () => {
           component: <div>
              <label  className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Olay Özeti</label>
             <TextArea
+            defaultValue={event?.event.summary}
               style={{ marginBottom: "8px" }}
               placeholder="olay özeti giriniz" />
           </div>,
@@ -70,6 +78,7 @@ const EventUpdate = () => {
           component: <div>
              <label  className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Olay Haberi</label>
             <TextArea
+            defaultValue={event?.event.news}
               style={{ marginBottom: "8px" }}
               placeholder="olay haberi giriniz" />
           </div>,
@@ -82,6 +91,7 @@ const EventUpdate = () => {
           component: <div>
              <label  className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Gerçek Hikaye</label>
             <TextArea
+            defaultValue={event?.event.realHistory}
               style={{ marginBottom: "8px" }}
               placeholder="gerçek hikaye giriniz" />
           </div>,

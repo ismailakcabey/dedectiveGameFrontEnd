@@ -21,9 +21,11 @@ const ExpressionUpdate = () => {
     const [guilty, setGuilty] = useState<boolean>(true);
     const { mutateAsync: itemDelete } = useDeleteExpression();
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const [currentExpression, setCurrentExpression] = useState<IExpression>()
 
     useEffect(() => {
-      }, [guilty, setGuilty, setExpressionDate,expressionDate])
+
+      }, [guilty, setGuilty, setExpressionDate,expressionDate,currentExpression,setCurrentExpression])
     const onChange: DatePickerProps['onChange'] = (date, dateString) => {
         console.log(dateString, "date string",date)
         const isoStringDate = new Date(dateString).toISOString();
@@ -249,7 +251,8 @@ const ExpressionUpdate = () => {
         await itemDelete(item.id!);
         refetch()
       }
-      const showModal = () => {
+      const showModal = (item:IExpression) => {
+        setCurrentExpression(item)
         setIsModalOpen(true);
       };
       const handleCancel = () => {
@@ -319,15 +322,15 @@ const ExpressionUpdate = () => {
             {date.toDateString()}
           </th>
           <td className="px-3 py-4">
-          <Modal width={"60%"} style={{maxHeight:"70%",overflowY:"auto"}} title={item.personName + " Kişisinin ifadesi"} open={isModalOpen}  onCancel={handleCancel}>
-          <ExpressionComponentSingle value={item}/>
+          <Modal width={"60%"} style={{maxHeight:"70%",overflowY:"auto"}} title={currentExpression?.personName + " Kişisinin ifadesi"} open={isModalOpen}  onCancel={handleCancel}>
+          <ExpressionComponentSingle value={currentExpression}/>
             </Modal>
               <button
                 type="button"
                 className="text-white bg-gradient-to-br from-purple-600 to-blue-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mx-2 my-2"
                 data-dismiss-target="#alert-border-3"
                 aria-label="Close"
-                onClick={showModal}
+                onClick={() => showModal(item)}
               >
                 Oku
               </button>
@@ -340,8 +343,6 @@ const ExpressionUpdate = () => {
     })}
   </tbody>
 </table>
-
-          
         </div>
     )
 }
