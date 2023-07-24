@@ -138,8 +138,8 @@ const ClueUpdate = () => {
                     {item.name}
                   </th>
                   <td className="px-3 py-4">
-                    <Modal width={"60%"} title={item.name} open={isModalOpen} onCancel={handleCancel}>
-                      <ClueComponentSingle value={item} />
+                    <Modal width={"60%"} style={{maxHeight:"70%",overflowY:"auto"}} title={item.name} open={isModalOpen} onCancel={handleCancel}>
+                        <ClueComponentSingle value={item} />
                     </Modal>
 
                     <button

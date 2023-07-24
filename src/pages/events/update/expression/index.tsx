@@ -319,7 +319,7 @@ const ExpressionUpdate = () => {
             {date.toDateString()}
           </th>
           <td className="px-3 py-4">
-          <Modal width={"60%"} title={item.personName + " Kişisinin ifadesi"} open={isModalOpen}  onCancel={handleCancel}>
+          <Modal width={"60%"} style={{maxHeight:"70%",overflowY:"auto"}} title={item.personName + " Kişisinin ifadesi"} open={isModalOpen}  onCancel={handleCancel}>
           <ExpressionComponentSingle value={item}/>
             </Modal>
               <button
