@@ -3,6 +3,7 @@ import { ITeam } from "../../models/team"
 import { useGetJoinTeam, useJoinTeam } from "../../services/team"
 import { notification } from "antd"
 import TeamMessage from "./message"
+import { Link } from "react-router-dom"
 
 const TeamWork = () => {
     
@@ -31,6 +32,7 @@ const TeamWork = () => {
         <h2 className="text-xl font-bold mb-4">Takımlar</h2>
         <ul>
           {teams?.map((team) => (
+            <Link to={"/team/work/"+team.id}>
             <li
               key={team.id}
               className={`cursor-pointer p-2 ${
@@ -40,6 +42,7 @@ const TeamWork = () => {
             >
               {team.name}
             </li>
+            </Link>
           ))}
         </ul>
       </div>

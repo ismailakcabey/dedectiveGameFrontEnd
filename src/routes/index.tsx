@@ -25,7 +25,7 @@ import TeamWork from '../pages/team-work';
            <Route path="/" element={<DashBoard />} />
            <Route path="/events" element={<EventMain />} />
            <Route path="/teams" element={<TeamsMain />} />
-           <Route path="/team/work" element={<TeamWork />} />
+           <Route path="/team/work/:id" element={<TeamWork />} />
            <Route path="/events/:id" element={<EventDetail />} />
            <Route path="/event/update/:id" element={<EventUpdate />} />
           </Route>

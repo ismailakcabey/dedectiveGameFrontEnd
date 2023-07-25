@@ -15,7 +15,7 @@ function App() {
     name: "Olaylar"
 },
 {
-  link:"/team/work",
+  link:"/team/work/current",
   name: "Takım Çalışması"
 },
 {
@@ -30,7 +30,7 @@ function App() {
     <div className="app">
     <div id='body' className="flex">
       {(data)?<div ><SideBar menuElement={menuElement} /></div>:<></>}
-      <div id='content' className="flex-grow mt-10 ml-5">
+      <div id='content' style={{maxHeight:"100vh",overflowY:"auto"}} className="flex-grow mt-10 ml-5">
         <Routers />
       </div>
     </div>
