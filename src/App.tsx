@@ -15,7 +15,7 @@ function App() {
     name: "Olaylar"
 },
 {
-  link:"/team/meet",
+  link:"/team/work",
   name: "Takım Çalışması"
 },
 {

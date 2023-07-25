@@ -1,12 +1,13 @@
-import { Button, Input, Modal, notification } from "antd";
+import { Button, Form, Input, Modal, notification } from "antd";
 import { useEffect, useMemo, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useCreateTeam, useGetTeam, useJoinTeam } from "../../../services/team";
-import { ITeam } from "../../../models/team";
-import Context from "@ant-design/icons/lib/components/Context";
+import { ITeam, ITeamDto } from "../../../models/team";
 import { LocalStorageUtils } from "../../../utils/localstorage";
 import { EKEYS } from "../../../config";
 import TeamAction from "../action";
+import { IDynamicForm } from "../../../models/common";
+import TeamCreate from "../action/create";
 
 
 
@@ -29,10 +30,7 @@ const TeamsMain = () => {
         skip:currentPage*6
     }
     const [api, contextHolder] = notification.useNotification();
-      const [teamActionData, setTeamActionData] = useState<{ name: string; isEdit: boolean }>({
-        name: "",
-        isEdit: false,
-      });
+      const [teamActionData, setTeamActionData] = useState<ITeam>();
     const {data:teams,refetch,isLoading} = useGetTeam(query)
     useEffect(()=>{
         console.log(search)
@@ -79,14 +77,27 @@ const TeamsMain = () => {
   };
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const showModal = (name: string, isEdit: boolean) => {
-    setTeamActionData({ name, isEdit });
+  const [isModalOpenCreate, setIsModalOpenCreate] = useState(false);
+
+  const showModal = (item:ITeam) => {
+    setTeamActionData(item)
     setIsModalOpen(true);
+  };
+
+  const showModalCreate = () => {
+    setIsModalOpenCreate(true);
   };
 
     return(
         <>
         {contextHolder}
+        <Modal
+        visible={isModalOpenCreate}
+        onCancel={() => setIsModalOpenCreate(false)}
+        footer={null}
+      >
+        <TeamCreate />
+      </Modal>
 <div className="w-10/12 sm:w-80 mx-auto flex ">
      <Search
       placeholder="Takım Adı İle Arama"
@@ -94,7 +105,7 @@ const TeamsMain = () => {
       enterButton="Search"
       onSearch={onSearch}
       style={{width: '100%',margin:"5px"}}
-    /><button onClick={() => showModal("", false)} type="button" className="text-white bg-gradient-to-r from-purple-500 to-pink-500 hover:bg-gradient-to-l focus:ring-4 focus:outline-none focus:ring-purple-200 dark:focus:ring-purple-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2">Takım oluştur</button>
+    /><button onClick={() => showModalCreate()} type="button" className="text-white bg-gradient-to-r from-purple-500 to-pink-500 hover:bg-gradient-to-l focus:ring-4 focus:outline-none focus:ring-purple-200 dark:focus:ring-purple-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2">Takım oluştur</button>
   </div>
   <div className="flex flex-wrap justify-center">
     <>
@@ -110,13 +121,7 @@ const TeamsMain = () => {
             </div>
 </> : <></>}
     </>
-    <Modal
-        visible={isModalOpen}
-        onCancel={() => setIsModalOpen(false)}
-        footer={null}
-      >
-        <TeamAction name={teamActionData.name} isEdit={teamActionData.isEdit} />
-      </Modal>
+    
     {
         teams?.data.map((item:ITeam,key:number)=>{
             return(
@@ -125,6 +130,15 @@ const TeamsMain = () => {
               <img className="rounded-t-lg" style={{width:"100%"}} src={`../../src/assets/event/images${key}.jpeg`} alt="" />
               </a>
               <div className="p-5">
+              <Modal
+        visible={isModalOpen}
+        onCancel={() => setIsModalOpen(false)}
+        footer={null}
+      >
+        <TeamAction 
+        //@ts-ignore
+        team={teamActionData} />
+      </Modal>
                   <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">{item.name}</h5>
                   <button onClick={()=>joinTeam(item)}  className='text-white bg-gradient-to-r from-purple-500 to-pink-500 hover:bg-gradient-to-l focus:ring-4 focus:outline-none focus:ring-purple-200 dark:focus:ring-purple-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2'>
                   Takıma Katıl
@@ -138,7 +152,7 @@ const TeamsMain = () => {
                 (item.createdUser == user.id)
                 ?
                 <div className="m-5">
-              <button onClick={() => showModal(item.name, true)} className='text-white bg-gradient-to-r from-purple-500 to-blue-500 hover:bg-gradient-to-l focus:ring-4 focus:outline-none focus:ring-purple-200 dark:focus:ring-purple-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2'>
+              <button onClick={() => showModal(item)} className='text-white bg-gradient-to-r from-purple-500 to-blue-500 hover:bg-gradient-to-l focus:ring-4 focus:outline-none focus:ring-purple-200 dark:focus:ring-purple-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2'>
                   Takımı Güncelle 
                   <svg className="w-3.5 h-3.5 ml-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
                     <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M1 5h12m0 0L9 1m4 4L9 9" />

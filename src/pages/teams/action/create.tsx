@@ -4,18 +4,14 @@ import { Form, Input, notification } from "antd";
 import { ITeam, ITeamDto } from "../../../models/team";
 import DynamicForm from "../../../components/DynamicForm";
 import { SaveOutlined } from "@ant-design/icons";
-import { usePatchTeam } from "../../../services/team";
-
-interface IProps {
-    team:ITeam
-}
+import { useCreateTeam, usePatchTeam } from "../../../services/team";
 
 
-const TeamAction = ({ team }: IProps) => {
+
+const TeamCreate = () => {
     const [loadingBtn, setLoadingBtn] = useState<boolean>(false);
     const [form] = Form.useForm();
-    console.log(team.id,team.name,"form içi");
-    const { mutateAsync } = usePatchTeam(team.id)
+    const { mutateAsync } = useCreateTeam()
     const [api, contextHolder] = notification.useNotification();
     const openNotificationWithIcon = (type: Notification,desc:string) => {
       //@ts-ignore
@@ -56,14 +52,14 @@ const TeamAction = ({ team }: IProps) => {
     <>
     {contextHolder}
         <div>
-            {team.name} Takımını Düzenle
+            Yeni Takımını Oluştur
             <DynamicForm
             form={form}
             formFields={formFieldsData}
             onFinish={onFinish}
             isEdit={true}
             btnSize="large"
-            btnText="Takım Düzenle"
+            btnText="Takım Oluştur"
             btnIcon={<SaveOutlined />}
             isHiddenBtn={false}
           />
@@ -72,4 +68,4 @@ const TeamAction = ({ team }: IProps) => {
   )
 }
 
-export default TeamAction
+export default TeamCreate

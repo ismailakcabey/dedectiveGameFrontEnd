@@ -113,7 +113,7 @@ const ClueUpdate = () => {
       form.event = parseInt(id)
       const result = await mutateAsync(form)
       //@ts-ignore
-      openNotificationWithIcon('success','Başarılı bir şekilde kayıt oluşturdunuz e-posta kutunuzu kontrol ediniz.')
+      openNotificationWithIcon('success','Başarılı bir şekilde kayıt oluşturdunuz.')
       refetch()
       setLoadingBtn(false);
     } catch (error) {
@@ -159,7 +159,8 @@ const ClueUpdate = () => {
                     {item.name}
                   </th>
                   <td className="px-3 py-4">
-                    <Modal width={"60%"} style={{maxHeight:"70%",overflowY:"auto"}} title={currentClue?.name} open={isModalOpen} onCancel={handleCancel}>
+                    <Modal width={"60%"} style={{maxHeight:"70%",overflowY:"auto"}} title={currentClue?.name} open={isModalOpen} onCancel={() => setIsModalOpen(false)}
+        footer={null}>
                         <ClueComponentSingle value={currentClue} />
                     </Modal>
 

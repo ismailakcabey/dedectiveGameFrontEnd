@@ -12,6 +12,7 @@ import EventMain from '../pages/events/main';
 import EventDetail from '../pages/events/detail';
 import EventUpdate from '../pages/events/update';
 import TeamsMain from '../pages/teams/main';
+import TeamWork from '../pages/team-work';
  class Routers extends Component {  
      render(): ReactNode {
          return(
@@ -24,6 +25,7 @@ import TeamsMain from '../pages/teams/main';
            <Route path="/" element={<DashBoard />} />
            <Route path="/events" element={<EventMain />} />
            <Route path="/teams" element={<TeamsMain />} />
+           <Route path="/team/work" element={<TeamWork />} />
            <Route path="/events/:id" element={<EventDetail />} />
            <Route path="/event/update/:id" element={<EventUpdate />} />
           </Route>

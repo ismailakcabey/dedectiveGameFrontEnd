@@ -40,6 +40,7 @@ export const APIS = {
   TEAMS: {
     TEAMS: API_PREFIX + '/team',
     JOIN: API_PREFIX + '/team/join',
+    IN: API_PREFIX + '/team/teams/in/user',
   }
 
 };
