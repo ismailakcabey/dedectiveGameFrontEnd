@@ -1,6 +1,5 @@
 import { Input } from "antd";
-import React, { useEffect, useState } from "react";
-import { Search } from "react-router-dom";
+import { useEffect, useState } from "react";
 import io from "socket.io-client";
 import { IUser } from "../../../models/user";
 import { LocalStorageUtils } from "../../../utils/localstorage";

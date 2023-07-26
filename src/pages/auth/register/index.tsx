@@ -9,7 +9,6 @@ import { IDynamicForm } from "../../../models/common";
 import RoleListCmp from "../../../components/Selects/roleSelect";
 
 const Register = () => {
-  const [successMessage, setSuccessMessage] = useState<string | null>(null);
   const [form] = Form.useForm();
   const [role, setRole] = useState<string>("user");
   const [birthDate, setBirthDate] = useState(Date);
@@ -35,7 +34,6 @@ const Register = () => {
       form.role = role;
       form.birthDate = birthDate;
       await userMutation.mutateAsync(form)
-      setSuccessMessage("Kayıt başarıyla tamamlandı. E-Posta onayı yaptıkdan sonra giriş yapabilirsiniz");
       setLoadingBtn(false);
       //@ts-ignore
       openNotificationWithIcon('success','Başarılı bir şekilde kayıt oluşturdunuz e-posta kutunuzu kontrol ediniz.')

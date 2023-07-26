@@ -8,13 +8,12 @@ import { LocalStorageUtils } from "../../../utils/localstorage";
 import { EKEYS } from "../../../config";
 import { IUser } from "../../../models/user";
 import { APIS } from "../../../services";
-import axios from "axios";
+import Axios from 'axios';
 import {  Form, Input } from "antd";
 import { IDynamicForm } from "../../../models/common";
 import DynamicForm from "../../../components/DynamicForm";
 import { LockOutlined, LoginOutlined, UserOutlined } from "@ant-design/icons";
 import './index.scss';
-
 const Login = () => {
   let loginObj = {
     email: "",
@@ -32,10 +31,10 @@ const Login = () => {
     try {
       const result = await loginMutation.mutateAsync(form);
       LocalStorageUtils.setItem<string>(EKEYS.tokenKey, result.token);
-       axios.create({
+       const axios = Axios.create({
          // Axios yapılandırmasını burada tanımlayın
        });
-       axios.interceptors.request.use((config) => {
+       axios.interceptors.request.use((config:any) => {
          //@ts-ignore
          config.headers.Authorization = `Bearer ${result.token}`;
          return config;

@@ -25,7 +25,7 @@ const nodeTypes = {
   custom: CustomNode
 };
 
-const BasicFlow = ({ onChange, value }: IProps) => {
+const BasicFlow = ({ value }: IProps) => {
   const initialNodes: Node[] = value
     ? value.map((item, index) => {
         const storedPosition = localStorage.getItem(`nodePosition_${index}`);
@@ -75,6 +75,7 @@ const BasicFlow = ({ onChange, value }: IProps) => {
 
   const onNodeMove = useCallback(
     (event: MouseEvent, node: Node) => {
+      event
       localStorage.setItem(
         `nodePosition_${node.id}`,
         JSON.stringify(node.position)

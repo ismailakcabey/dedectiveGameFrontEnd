@@ -1,15 +1,13 @@
-import { useEffect, useState } from "react";
 import { IDynamicForm } from "../../../models/common";
 import { Form, Input, notification } from "antd";
-import { ITeam, ITeamDto } from "../../../models/team";
+import { ITeamDto } from "../../../models/team";
 import DynamicForm from "../../../components/DynamicForm";
 import { SaveOutlined } from "@ant-design/icons";
-import { useCreateTeam, usePatchTeam } from "../../../services/team";
+import { useCreateTeam } from "../../../services/team";
 
 
 
 const TeamCreate = () => {
-    const [loadingBtn, setLoadingBtn] = useState<boolean>(false);
     const [form] = Form.useForm();
     const { mutateAsync } = useCreateTeam()
     const [api, contextHolder] = notification.useNotification();
@@ -36,16 +34,16 @@ const TeamCreate = () => {
         },
       ] as IDynamicForm['formFields'];
       const onFinish = async (form: ITeamDto) => {
-        setLoadingBtn(true);
+        
         try {
-          const data = await mutateAsync(form)
+          await mutateAsync(form)
           //@ts-ignore
       openNotificationWithIcon('success','Başarılı bir şekilde kayıt oluşturdunuz.')
-          setLoadingBtn(false);
+        
         } catch (error) {
           //@ts-ignore
       openNotificationWithIcon('warning','Bir sorun oluştu')
-          setLoadingBtn(false);
+        
         }
       };
   return(

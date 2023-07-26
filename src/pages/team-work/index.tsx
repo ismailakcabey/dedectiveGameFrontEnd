@@ -1,23 +1,13 @@
 import { useEffect, useState } from "react"
 import { ITeam } from "../../models/team"
-import { useGetJoinTeam, useJoinTeam } from "../../services/team"
-import { notification } from "antd"
+import { useGetJoinTeam } from "../../services/team"
 import TeamMessage from "./message"
 import { Link } from "react-router-dom"
 
 const TeamWork = () => {
     
-    const { data:teams,refetch,isLoading }  = useGetJoinTeam()
+    const { data:teams,isLoading }  = useGetJoinTeam()
     const [currentTeam,setCurrentTeam] = useState<ITeam>()
-    const [api, contextHolder] = notification.useNotification();
-    const openNotificationWithIcon = (type: Notification,desc:string) => {
-        //@ts-ignore
-        api[type]({
-          message: 'Bildirim',
-          description:
-            desc,
-        });
-      };
       useEffect(()=>{
       },[currentTeam,setCurrentTeam,isLoading])
       const handleTeamClick = (team:ITeam) => {
@@ -25,7 +15,6 @@ const TeamWork = () => {
       };
     return(
         <>
-        {contextHolder}
         <div className="flex h-screen">
       {/* Sol tarafta Teams listesi */}
       <div className="w-1/4 p-4 " >

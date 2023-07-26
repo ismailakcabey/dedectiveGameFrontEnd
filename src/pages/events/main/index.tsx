@@ -15,7 +15,6 @@ const EventMain = () => {
   //@ts-ignore
   const user:IUser = LocalStorageUtils.getItem(EKEYS.userKey)
   const [api, contextHolder] = notification.useNotification();
-  const [successMessage, setSuccessMessage] = useState<string | null>(null);
   const openNotificationWithIcon = (type: Notification,desc:string) => {
     //@ts-ignore
     api[type]({

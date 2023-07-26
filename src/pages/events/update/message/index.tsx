@@ -20,7 +20,6 @@ const MessageUpdate = () => {
     //@ts-ignore
     const { data: messageData, refetch,isLoading } = useGetMessage(id);
     const { mutateAsync: itemDeleteMessage } = useDeleteMessage();
-    const [isModalOpen, setIsModalOpen] = useState(false);
     const [api, contextHolder] = notification.useNotification();
     const openNotificationWithIcon = (type: Notification,desc:string) => {
       //@ts-ignore
@@ -31,7 +30,7 @@ const MessageUpdate = () => {
       });
     };
     useEffect(()=>{
-    },[message,setMessage])
+    },[message,setMessage,loadingBtn,setLoadingBtn])
     const deleteItem = async (item:any) => {
       try {
         await itemDeleteMessage(item.id!);
@@ -81,7 +80,7 @@ const MessageUpdate = () => {
             form.event = parseInt(id)
             //@ts-ignore
             form.messages = messageDataContent
-          const result = await mutateAsync(form)
+          await mutateAsync(form)
           //@ts-ignore
           openNotificationWithIcon('success','Başarılı bir şekilde kayıt güncellediniz')
           refetch()
@@ -91,12 +90,6 @@ const MessageUpdate = () => {
            openNotificationWithIcon('error','Bir sorun oluştu')
           setLoadingBtn(false);
         }
-      };
-      const showModal = () => {
-        setIsModalOpen(true);
-      };
-      const handleCancel = () => {
-        setIsModalOpen(false);
       };
     return(
         <div>

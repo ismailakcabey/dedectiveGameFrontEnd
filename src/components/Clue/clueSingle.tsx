@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { IClue } from "../../models/clue";
 
 interface IProps {

@@ -1,21 +1,19 @@
 import { useParams } from "react-router-dom";
 import { useGetEventId, useUpdateEvent } from "../../../services/event";
-import { Button, Divider, Form, Input, Popover, Upload, UploadProps, message, notification } from "antd";
-import { LockOutlined, SaveOutlined, TabletOutlined, UploadOutlined, UserOutlined } from "@ant-design/icons";
+import { Button, Divider, Form, Upload, UploadProps, message, notification } from "antd";
+import { SaveOutlined, UploadOutlined } from "@ant-design/icons";
 import { IDynamicForm } from "../../../models/common";
 import DynamicForm from "../../../components/DynamicForm";
 import { IEventDto } from "../../../models/event";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import ClueUpdate from "./clue";
 import TextArea from "antd/es/input/TextArea";
-import { IClue } from "../../../models/clue";
 import ExpressionUpdate from "./expression";
 import CardExtraUpdate from "./cardExtra";
 import MessageUpdate from "./message";
 
 const EventUpdate = () => {
     const { id } = useParams();
-    const [loadingBtn, setLoadingBtn] = useState<boolean>(false);
     const [api, contextHolder] = notification.useNotification();
     const openNotificationWithIcon = (type: Notification,desc:string) => {
       //@ts-ignore
@@ -120,16 +118,13 @@ const EventUpdate = () => {
           },
       ] as IDynamicForm['formFields'];
       const onFinish = async (form: IEventDto) => {
-        setLoadingBtn(true);
         try {
-          const result = await mutateAsync(form)
+          await mutateAsync(form)
           //@ts-ignore
           openNotificationWithIcon('success','Başarılı bir şekilde kayıt güncellediniz')
-          setLoadingBtn(false);
         } catch (error) {
           //@ts-ignore
           openNotificationWithIcon('error','Bir sorun oluştu')
-          setLoadingBtn(false);
         }
       };
     console.log(event);

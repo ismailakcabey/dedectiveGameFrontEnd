@@ -82,7 +82,7 @@ const CardExtraUpdate = () => {
             form.event = parseInt(id)
             //@ts-ignore
             form.price = parseInt(form.price)
-          const result = await mutateAsync(form)
+           await mutateAsync(form)
           //@ts-ignore
         openNotificationWithIcon('success','Başarılı bir şekilde kayıt güncellediniz')
           refetch()

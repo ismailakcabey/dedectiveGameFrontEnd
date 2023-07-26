@@ -19,7 +19,7 @@ const EventDetail = () => {
     useEffect(()=>{
         console.log(component)
         console.log(currentExpression)
-    }, [component,setComponent,currentExpression,setCurrentExpression])
+    }, [component,setComponent,currentExpression,setCurrentExpression,isModalOpen,setIsModalOpen])
     console.log(event)
     const buttonArray = [
         {
@@ -79,10 +79,6 @@ const EventDetail = () => {
     };
   
     const handleOk = () => {
-      setIsModalOpen(false);
-    };
-  
-    const handleCancel = () => {
       setIsModalOpen(false);
     };
 

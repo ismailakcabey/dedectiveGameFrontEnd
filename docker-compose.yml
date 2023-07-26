@@ -1,0 +1,9 @@
+version: '1.0'
+services:
+  local-frontend:
+    container_name: dedective-game-frontend
+    image: dedective-game-frontend
+    build:
+      context: .
+    ports:
+      - '4000:4000'

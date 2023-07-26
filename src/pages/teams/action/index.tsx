@@ -1,4 +1,3 @@
-import { useEffect, useState } from "react";
 import { IDynamicForm } from "../../../models/common";
 import { Form, Input, notification } from "antd";
 import { ITeam, ITeamDto } from "../../../models/team";
@@ -12,7 +11,6 @@ interface IProps {
 
 
 const TeamAction = ({ team }: IProps) => {
-    const [loadingBtn, setLoadingBtn] = useState<boolean>(false);
     const [form] = Form.useForm();
     console.log(team.id,team.name,"form içi");
     const { mutateAsync } = usePatchTeam(team.id)
@@ -40,16 +38,13 @@ const TeamAction = ({ team }: IProps) => {
         },
       ] as IDynamicForm['formFields'];
       const onFinish = async (form: ITeamDto) => {
-        setLoadingBtn(true);
         try {
-          const data = await mutateAsync(form)
+         await mutateAsync(form)
           //@ts-ignore
       openNotificationWithIcon('success','Başarılı bir şekilde kayıt oluşturdunuz.')
-          setLoadingBtn(false);
         } catch (error) {
           //@ts-ignore
       openNotificationWithIcon('warning','Bir sorun oluştu')
-          setLoadingBtn(false);
         }
       };
   return(

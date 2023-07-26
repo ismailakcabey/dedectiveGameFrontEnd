@@ -1,6 +1,6 @@
-import { Form, Input, Select } from "antd";
+import { Form, Select } from "antd";
 import { IDynamicForm } from "../../../../models/common";
-import { SaveOutlined, UserOutlined } from "@ant-design/icons";
+import { SaveOutlined } from "@ant-design/icons";
 import TextArea from "antd/es/input/TextArea";
 import { useEffect, useState } from "react";
 import DynamicForm from "../../../../components/DynamicForm";
@@ -17,6 +17,7 @@ const MessageContent = ({ messageDataContent, setMessageDataContent }: IProps) =
     useEffect(()=>{
         messageDataContent = message
     },[person,setPerson])
+    messageDataContent
     const onChange = (value: string) => {
         console.log(`selected ${value}`);
         setPerson(value)
@@ -76,7 +77,7 @@ const MessageContent = ({ messageDataContent, setMessageDataContent }: IProps) =
         }
       };
       const handleDeleteMessage = (key: number) => {
-        setMessage((prevMessages) => prevMessages.filter((item: any, index: number) => index !== key));
+        setMessage((prevMessages) => prevMessages.filter(( index: number) => index !== key));
       };
     return (
         <div>

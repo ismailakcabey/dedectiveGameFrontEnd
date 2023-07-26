@@ -25,7 +25,7 @@ export const axios = Axios.create({
   withCredentials: true,
 });
 
-axios.interceptors.request.use((config) => {
+axios.interceptors.request.use((config:any) => {
   const token = LocalStorageUtils.getItem(EKEYS.tokenKey);
 
   if (token && token !== 'undefined') {
@@ -38,14 +38,14 @@ axios.interceptors.request.use((config) => {
 
 // response interceptor
 axios.interceptors.response.use(
-  (response) => {
+  (response:any) => {
     const data = response?.data;
 
     if (true) {
       return data;
     }
   },
-  async (error) => {
+  async (error:any) => {
     const message = error?.response?.data?.message || error?.message || 'Error!';
     notification.error({
       message: error?.response?.data?.error?.name,

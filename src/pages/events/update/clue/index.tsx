@@ -1,8 +1,7 @@
-import { Button, Form, Input, Modal, Popover, Upload, UploadProps, message, notification } from "antd";
+import { Button, Form, Input, Modal, Upload, UploadProps, message, notification } from "antd";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { useUpdateEvent } from "../../../../services/event";
-import { SaveOutlined, TabletOutlined, UploadOutlined, UserOutlined } from "@ant-design/icons";
+import { SaveOutlined, UploadOutlined, UserOutlined } from "@ant-design/icons";
 import { IDynamicForm } from "../../../../models/common";
 import { IClue, IClueDto } from "../../../../models/clue";
 import DynamicForm from "../../../../components/DynamicForm";
@@ -12,7 +11,6 @@ import ClueComponentSingle from "../../../../components/Clue/clueSingle";
 
 const ClueUpdate = () => {
   const { id } = useParams();
-  const [loadingBtn, setLoadingBtn] = useState<boolean>(false);
   const [form] = Form.useForm();
   const [isModalOpen, setIsModalOpen] = useState(false);
   //@ts-ignore
@@ -60,9 +58,6 @@ const ClueUpdate = () => {
     setCurrentClue(item)
     setIsModalOpen(true);
   };
-  const handleCancel = () => {
-    setIsModalOpen(false);
-  };
   const formFieldsData = [
     {
       label: '',
@@ -107,19 +102,16 @@ const ClueUpdate = () => {
     },
   ] as IDynamicForm['formFields'];
   const onFinish = async (form: IClueDto) => {
-    setLoadingBtn(true);
     try {
       //@ts-ignore
       form.event = parseInt(id)
-      const result = await mutateAsync(form)
+      await mutateAsync(form)
       //@ts-ignore
       openNotificationWithIcon('success','Başarılı bir şekilde kayıt oluşturdunuz.')
       refetch()
-      setLoadingBtn(false);
     } catch (error) {
       //@ts-ignore
       openNotificationWithIcon('warning','Bir sorun oluştu')
-      setLoadingBtn(false);
     }
   };
   return (

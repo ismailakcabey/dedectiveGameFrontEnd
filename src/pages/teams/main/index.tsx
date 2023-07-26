@@ -1,12 +1,10 @@
-import { Button, Form, Input, Modal, notification } from "antd";
-import { useEffect, useMemo, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import { useCreateTeam, useGetTeam, useJoinTeam } from "../../../services/team";
-import { ITeam, ITeamDto } from "../../../models/team";
+import { Input, Modal, notification } from "antd";
+import { useEffect, useState } from "react";
+import {  useGetTeam, useJoinTeam } from "../../../services/team";
+import { ITeam } from "../../../models/team";
 import { LocalStorageUtils } from "../../../utils/localstorage";
 import { EKEYS } from "../../../config";
 import TeamAction from "../action";
-import { IDynamicForm } from "../../../models/common";
 import TeamCreate from "../action/create";
 
 
@@ -14,7 +12,6 @@ import TeamCreate from "../action/create";
 const TeamsMain = () => {
     const { Search } = Input;
     const [search,setSearch] = useState<string>()
-    const navigate = useNavigate();
     const [currentPage,setCurrentPage] = useState<number>(0)
     const [joinStatusTeam,setJoinStatusTeam] = useState<boolean>(false)
     const { mutateAsync } = useJoinTeam()

@@ -1,4 +1,4 @@
-import { Button, DatePicker, DatePickerProps, Form, Input, Modal, Popover, Switch, Upload, UploadProps, message, notification } from "antd";
+import { Button, DatePicker, DatePickerProps, Form, Input, Modal, Switch, Upload, UploadProps, message, notification } from "antd";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { useCreateExpression, useDeleteExpression, useGetExpression } from "../../../../services/expression";
@@ -33,7 +33,7 @@ const ExpressionUpdate = () => {
     };
     useEffect(() => {
 
-      }, [guilty, setGuilty, setExpressionDate,expressionDate,currentExpression,setCurrentExpression])
+      }, [guilty, setGuilty, setExpressionDate,expressionDate,currentExpression,setCurrentExpression,loadingBtn,setLoadingBtn])
     const onChange: DatePickerProps['onChange'] = (date, dateString) => {
         console.log(dateString, "date string",date)
         const isoStringDate = new Date(dateString).toISOString();
@@ -248,7 +248,7 @@ const ExpressionUpdate = () => {
             form.event = parseInt(id)
             form.expressionDate = expressionDate
             form.guilty = guilty
-          const result = await mutateAsync(form)
+           await mutateAsync(form)
           //@ts-ignore
         openNotificationWithIcon('success','Başarılı bir şekilde kayıt oluşturdunuz e-posta kutunuzu kontrol ediniz.')
           refetch()
@@ -268,9 +268,6 @@ const ExpressionUpdate = () => {
       const showModal = (item:IExpression) => {
         setCurrentExpression(item)
         setIsModalOpen(true);
-      };
-      const handleCancel = () => {
-        setIsModalOpen(false);
       };
     return(
         <div>
